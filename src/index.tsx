@@ -23,6 +23,7 @@ import NutoGarden from "./pages/Web/NutoGarden";
 import CheckChat from "./pages/Mobile/CheckChat";
 import BoothAccount from "./pages/Mobile/BoothAccount";
 import NutoPost from "./pages/Web/NutoPost";
+import Intro from "./pages/Web/Intro";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -34,6 +35,7 @@ root.render(
         <AdminProvider>
           <ImageProvider>
             <Routes>
+              <Route path="/" element={<Navigate to="/intro" replace />} />
               <Route path="/home" element={<Home />}></Route>
               <Route path="/search" element={<Search />}></Route>
               <Route path="/post" element={<PostUpload />}></Route>
@@ -54,6 +56,7 @@ root.render(
               <Route path="/nuto-garden" element={<NutoGarden />} />
               <Route path="/check-message" element={<CheckChat />} />
               <Route path="/nuto-post" element={<NutoPost />} />
+              <Route path="/intro" element={<Intro />}></Route> 
             </Routes>
           </ImageProvider>
         </AdminProvider>

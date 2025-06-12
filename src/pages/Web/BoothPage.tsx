@@ -3,12 +3,16 @@ import Board from "../../components/Board";
 import style from "../../styles/BoothPage.module.css";
 import { boothsData } from "../../assets/json/booths";
 import { useNavigate } from "react-router-dom";
+import { useIdleRedirect } from "../../hooks/useIdleTimer";
 
 function BoothPage() {
   const navigate = useNavigate();
   const handleClick = (route: string) => {
     navigate(route);
   };
+
+  useIdleRedirect(60000, "/intro"); // 1분 동안 움직임이 없을 시 intro로 이동
+
   return (
     <div className={style.boothPageContainer}>
       <header className={style.nutoHeader}>
@@ -18,7 +22,7 @@ function BoothPage() {
           width={203}
           height={44}
           style={{ marginTop: "5px" }}
-          onClick={() => handleClick("/nuto-garden")}
+          onClick={() => handleClick("/intro")}
         />
         <span>
           <span
