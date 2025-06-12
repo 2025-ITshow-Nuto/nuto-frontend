@@ -2,8 +2,8 @@ import axios from "axios";
 import styles from "../styles/Comment.module.css";
 import { useEffect, useState } from "react";
 import { format, toZonedTime } from "date-fns-tz";
-import { usePostInfo } from "../context/PostInfoContext";
 import ChatBox from "./ChatBox";
+import { motion, useDragControls, useAnimation } from "framer-motion";
 
 const timeZone = "Asia/Seoul";
 
@@ -14,6 +14,8 @@ function Comment({
   postId: string;
   setSelectPost: (string) => void;
 }) {
+  const controls = useDragControls();
+  const animation = useAnimation();
   const [otherComment, setOtherComment] = useState([]);
   const [comment, setComment] = useState("");
 
@@ -45,18 +47,40 @@ function Comment({
     fetch();
   }, []);
 
+  const handleDragEnd = (event, info) => {
+    if (info.offset.y > 90) {
+      setSelectPost(null);
+    } else {
+      animation.start({
+        y: 0,
+        transition: { type: "tween", duration: 0.3, ease: "easeOut" },
+      });
+    }
+  };
+
   return (
-    <div className={styles.container}>
-      <div className={styles.handle}>
-        <div className={styles.bar}></div>
-      </div>
-      <div
-        className={styles.commentContainer}
-        onClick={(e) => {
-          if (e.target === e.currentTarget) setSelectPost(null);
+    <motion.div
+      className={styles.container}
+      drag="y"
+      dragControls={controls}
+      dragListener={false}
+      onDragEnd={handleDragEnd}
+      animate={animation}
+      initial={{ y: 0 }}
+    >
+      <motion.div
+        className={styles.handle}
+        onPointerDownCapture={(e) => {
+          e.preventDefault();
+          controls.start(e);
         }}
       >
-        <div onClick={() => setSelectPost(null)}>
+        <div className={styles.bar}></div>
+      </motion.div>
+      <div 
+        className={styles.commentContainer}
+      >
+        <div>
           {otherComment &&
             otherComment.map((comment, i) => {
               const zonedDate = toZonedTime(comment.createdAt, timeZone);
@@ -92,7 +116,7 @@ function Comment({
           />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
