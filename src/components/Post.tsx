@@ -65,7 +65,7 @@ function Post({ post, refetchPost, setSelectPost }: PostProps) {
           <div
             className={style.profileImgContainer}
             style={{
-              backgroundImage: `url(/images/profiles/${post.location}.png)`,
+              backgroundImage: `url(/images/booths/${post.location}.png)`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
