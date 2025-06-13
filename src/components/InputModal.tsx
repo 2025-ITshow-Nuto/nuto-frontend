@@ -4,16 +4,18 @@ import styles from "../styles/InputModal.module.css"
 
 type InputModalProps = {
     q: string,
-    sendComment?: (name:string) => void,
+    postId?: string,
+    send?: (val:string) => void,
     setShowInput: (val:boolean) => void
 }
 
-export default function InputModal({q, sendComment, setShowInput}:InputModalProps) {
-    const [name, setName] = useState('')
+export default function InputModal({q, send, setShowInput}:InputModalProps) {
+    const [val, setVal] = useState('')
     const handleClick = () => {
-        if(name.trim() === '') return;
+        if(val.trim() === '') return;
+        console.log(val);
         setShowInput(false)
-        sendComment(name)
+        send(val)
     }
 
     return (
@@ -23,8 +25,8 @@ export default function InputModal({q, sendComment, setShowInput}:InputModalProp
                     <p className={styles.question}>{q}</p>
                     <input 
                         className={styles.input}
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
+                        value={val}
+                        onChange={(e) => setVal(e.target.value)}
                     />
                     <button className={styles.btn} onClick={handleClick}>확인</button>
                 </div>

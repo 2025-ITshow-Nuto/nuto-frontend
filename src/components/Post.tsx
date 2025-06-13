@@ -2,11 +2,13 @@ import style from "../styles/Post.module.css";
 import { MdDelete } from "react-icons/md";
 import bcrypt from "bcryptjs";
 import axios from "axios";
+import InputModal from "./InputModal";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
+import { useState } from "react";
 
 interface Comment {
   _id: string;
@@ -33,13 +35,14 @@ interface PostProps {
 
 function Post({ post, refetchPost, setSelectPost }: PostProps) {
   // console.log(process.env.REACT_APP_SALT_VALUE);
+  const [showInput, setShowInput] = useState(false)
+  const [postId, setPostId] = useState('')
   const hashing = async (password: string) => {
     const salt = process.env.REACT_APP_SALT_VALUE;
     return await bcrypt.hash(password, salt);
   };
 
-  const handleClick = async (postId: string) => {
-    const password = prompt("포스트 비밀번호를 입력해주세요");
+  const handleClick = async (password: string) => {
     const hashedPassword = await hashing(password);
 
     // console.log(postId, hashedPassword);
@@ -72,7 +75,7 @@ function Post({ post, refetchPost, setSelectPost }: PostProps) {
           ></div>
           <p className={style.profileName}>{post.location}</p>
         </div>
-        <div onClick={() => handleClick(post._id)} className={style.deleteIcon}>
+        <div onClick={() => {setPostId(post._id); setShowInput(true)}} className={style.deleteIcon}>
           <MdDelete />
         </div>
       </div>
@@ -105,6 +108,9 @@ function Post({ post, refetchPost, setSelectPost }: PostProps) {
           <span className={style.writer}>{post.name}</span>
         </div>
       </div>
+      {showInput && (
+        <InputModal q="포스트 비밀번호를 입력해주세요" send={handleClick} setShowInput={setShowInput} />
+      )}
     </div>
   );
 }

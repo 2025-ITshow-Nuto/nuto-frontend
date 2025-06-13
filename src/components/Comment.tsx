@@ -115,7 +115,7 @@ function Comment({
         </div>
       </div>
       {showInput && (
-        <InputModal q="이름을 입력해주세요" sendComment={sendComment} setShowInput={setShowInput} />
+        <InputModal q="이름을 입력해주세요" send={sendComment} setShowInput={setShowInput} />
       )}
     </motion.div>
   );
