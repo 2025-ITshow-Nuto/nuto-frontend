@@ -1,10 +1,10 @@
 import axios from "axios";
 import styles from "../styles/Comment.module.css";
 import { useEffect, useState } from "react";
-import { format, toZonedTime } from "date-fns-tz";
 import ChatBox from "./ChatBox";
 import { motion, useDragControls, useAnimation } from "framer-motion";
-import { parseISO } from "date-fns";
+import { format, parseISO } from "date-fns";
+import { toZonedTime } from "date-fns-tz";
 
 const timeZone = "Asia/Seoul";
 
@@ -83,19 +83,24 @@ function Comment({
           {otherComment &&
             otherComment.map((comment, i) => {
               const rawDate = comment.createdAt;
-              const parsedDate = parseISO(rawDate);
-              const zonedDate = toZonedTime(parsedDate, timeZone);
-              const formatted = format(zonedDate, "MM-dd HH:mm", { timeZone });
-              return (
-                <div className={styles.commentBox}>
-                  <p>{comment.name}</p>
-                  <ChatBox
-                    type="check"
-                    time={formatted}
-                    comment={comment.comment}
-                  />
-                </div>
-              );
+              try {
+                const parsedDate = parseISO(rawDate);
+                const zonedDate = toZonedTime(parsedDate, timeZone);
+                const formatted = format(zonedDate, "MM-dd HH:mm");
+
+                return (
+                  <div className={styles.commentBox}>
+                    <p>{comment.name}</p>
+                    <ChatBox
+                      type="check"
+                      time={formatted}
+                      comment={comment.comment}
+                    />
+                  </div>
+                );
+              } catch (e) {
+                console.error("날짜 포맷 에러:", rawDate, e);
+              }
             })}
         </div>
         <div className={styles.messageContainer}>
