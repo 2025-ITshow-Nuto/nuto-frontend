@@ -81,17 +81,12 @@ function Comment({
         <div>
           {otherComment &&
             otherComment.map((comment, i) => {
-              const zonedDate = toZonedTime(
-                new Date(comment.createdAt),
-                timeZone
-              );
-              const formatted = format(zonedDate, "MM-dd HH:mm");
               return (
                 <div className={styles.commentBox}>
                   <p>{comment.name}</p>
                   <ChatBox
                     type="check"
-                    time={formatted}
+                    time={comment.createdAt}
                     comment={comment.comment}
                   />
                 </div>
