@@ -83,24 +83,28 @@ function Comment({
           {otherComment &&
             otherComment.map((comment, i) => {
               const rawDate = comment.createdAt;
-              try {
-                const parsedDate = parseISO(rawDate);
-                const zonedDate = toZonedTime(parsedDate, timeZone);
-                const formatted = format(zonedDate, "MM-dd HH:mm");
+              const rawNewDate = new Date(rawDate);
 
-                return (
-                  <div className={styles.commentBox}>
-                    <p>{comment.name}</p>
-                    <ChatBox
-                      type="check"
-                      time={formatted}
-                      comment={comment.comment}
-                    />
-                  </div>
-                );
-              } catch (e) {
-                console.error("날짜 포맷 에러:", rawDate, e);
-              }
+              const formatDate =
+                rawNewDate.getMonth() +
+                1 +
+                "." +
+                rawNewDate.getDate() +
+                " " +
+                rawNewDate.getHours() +
+                ":" +
+                rawNewDate.getMinutes();
+
+              return (
+                <div className={styles.commentBox}>
+                  <p>{comment.name}</p>
+                  <ChatBox
+                    type="check"
+                    time={formatDate}
+                    comment={comment.comment}
+                  />
+                </div>
+              );
             })}
         </div>
         <div className={styles.messageContainer}>
