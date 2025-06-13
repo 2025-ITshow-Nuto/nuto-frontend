@@ -3,9 +3,7 @@ import styles from "../styles/Comment.module.css";
 import { useEffect, useState } from "react";
 import ChatBox from "./ChatBox";
 import { motion, useDragControls, useAnimation } from "framer-motion";
-import { format } from "date-fns-tz";
-
-const zone = "Asia/Seoul";
+import InputModal from "./InputModal";
 
 function Comment({
   postId,
@@ -18,6 +16,7 @@ function Comment({
   const animation = useAnimation();
   const [otherComment, setOtherComment] = useState([]);
   const [comment, setComment] = useState("");
+  const [showInput, setShowInput] = useState(false)
 
   const close = (e) => {
     if (e.target === e.currentTarget) {
@@ -25,8 +24,7 @@ function Comment({
     }
   };
 
-  const sendComment = async () => {
-    const name = prompt("이름을 입력해주세요");
+  const sendComment = async (name: string) => {
     await axios.post("https://nuto.mirim-it-show.site/post/comment", {
       name,
       comment,
@@ -57,22 +55,10 @@ function Comment({
       });
     }
   };
-  function convertISOToKSTString(isoString) {
-    // "2025-06-13T05:16:07.548Z" 형식 가정
-    if (!isoString || isoString.length < 16) return null;
 
-    const month = isoString.slice(5, 7);
-    const day = isoString.slice(8, 10);
-    let hour = parseInt(isoString.slice(11, 13), 10);
-    const min = isoString.slice(14, 16);
-
-    // KST 변환 (+9)
-    hour = (hour + 9) % 24;
-
-    // 두 자리로 맞춤
-    const hourStr = hour.toString().padStart(2, "0");
-
-    return `${month}-${day} ${hourStr}:${min}`;
+  const handleClick = () => {
+    if(comment.trim() === '') return;
+    setShowInput(true)
   }
 
   return (
@@ -99,8 +85,6 @@ function Comment({
           {otherComment &&
             otherComment.map((comment, i) => {
               const rawData = comment.createdAt;
-              // const formattedDate = convertISOToKSTString(rawData);
-              // console.log(rawData);
               return (
                 <div className={styles.commentBox}>
                   <p>{comment.name}</p>
@@ -125,11 +109,14 @@ function Comment({
           <img
             src="/images/sendButton.png"
             alt="sendButton"
-            onClick={sendComment}
+            onClick={handleClick}
             className={styles.sendBtn}
           />
         </div>
       </div>
+      {showInput && (
+        <InputModal q="이름을 입력해주세요" sendComment={sendComment} setShowInput={setShowInput} />
+      )}
     </motion.div>
   );
 }
