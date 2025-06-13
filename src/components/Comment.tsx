@@ -77,13 +77,12 @@ function Comment({
       >
         <div className={styles.bar}></div>
       </motion.div>
-      <div 
-        className={styles.commentContainer}
-      >
+      <div className={styles.commentContainer}>
         <div>
           {otherComment &&
             otherComment.map((comment, i) => {
-              const zonedDate = toZonedTime(comment.createdAt, timeZone);
+              const safeTime = comment.createdAt?.replace(" ", "T");
+              const zonedDate = toZonedTime(safeTime, timeZone);
               const formatted = format(zonedDate, "MM-dd HH:mm", {
                 timeZone,
               });
