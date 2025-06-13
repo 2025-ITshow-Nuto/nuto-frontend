@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { format, toZonedTime } from "date-fns-tz";
 import ChatBox from "./ChatBox";
 import { motion, useDragControls, useAnimation } from "framer-motion";
+import { parseISO } from "date-fns";
 
 const timeZone = "Asia/Seoul";
 
@@ -81,12 +82,16 @@ function Comment({
         <div>
           {otherComment &&
             otherComment.map((comment, i) => {
+              const rawDate = comment.createdAt;
+              const parsedDate = parseISO(rawDate);
+              const zonedDate = toZonedTime(parsedDate, timeZone);
+              const formatted = format(zonedDate, "MM-dd HH:mm", { timeZone });
               return (
                 <div className={styles.commentBox}>
                   <p>{comment.name}</p>
                   <ChatBox
                     type="check"
-                    time={comment.createdAt}
+                    time={formatted}
                     comment={comment.comment}
                   />
                 </div>
