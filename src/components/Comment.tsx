@@ -98,15 +98,15 @@ function Comment({
         <div>
           {otherComment &&
             otherComment.map((comment, i) => {
-              const rawData = comment.createdAt;
-              const formattedDate = convertISOToKSTString(rawData);
-              console.log(rawData);
+              // const rawData = comment.createdAt;
+              // const formattedDate = convertISOToKSTString(rawData);
+              // console.log(rawData);
               return (
                 <div className={styles.commentBox}>
                   <p>{comment.name}</p>
                   <ChatBox
                     type="check"
-                    time={formattedDate}
+                    time={"formattedDate"}
                     comment={comment.comment}
                   />
                 </div>
