@@ -81,11 +81,11 @@ function Comment({
         <div>
           {otherComment &&
             otherComment.map((comment, i) => {
-              const safeTime = comment.createdAt?.replace(" ", "T");
-              const zonedDate = toZonedTime(safeTime, timeZone);
-              const formatted = format(zonedDate, "MM-dd HH:mm", {
-                timeZone,
-              });
+              const zonedDate = toZonedTime(
+                new Date(comment.createdAt),
+                timeZone
+              );
+              const formatted = format(zonedDate, "MM-dd HH:mm");
               return (
                 <div className={styles.commentBox}>
                   <p>{comment.name}</p>
