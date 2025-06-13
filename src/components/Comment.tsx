@@ -57,18 +57,23 @@ function Comment({
       });
     }
   };
+  function convertISOToKSTString(isoString) {
+    // "2025-06-13T05:16:07.548Z" 형식 가정
+    if (!isoString || isoString.length < 16) return null;
 
-  const formatDate = (date) => {
-    if (typeof date === "string") {
-      if (date.length <= 10) {
-        date = date.replace(/\./g, "-");
-      }
+    const month = isoString.slice(5, 7);
+    const day = isoString.slice(8, 10);
+    let hour = parseInt(isoString.slice(11, 13), 10);
+    const min = isoString.slice(14, 16);
 
-      return format(new Date(date), "MM-dd HH:mm", {
-        timeZone: zone,
-      });
-    }
-  };
+    // KST 변환 (+9)
+    hour = (hour + 9) % 24;
+
+    // 두 자리로 맞춤
+    const hourStr = hour.toString().padStart(2, "0");
+
+    return `${month}-${day} ${hourStr}:${min}`;
+  }
 
   return (
     <motion.div
@@ -93,10 +98,9 @@ function Comment({
         <div>
           {otherComment &&
             otherComment.map((comment, i) => {
-              let rawDate = comment.createdAt;
-              let formattedDate = formatDate(rawDate);
-              console.log(rawDate, formattedDate);
-
+              const rawData = comment.createdAt;
+              const formattedDate = convertISOToKSTString(rawData);
+              console.log(rawData);
               return (
                 <div className={styles.commentBox}>
                   <p>{comment.name}</p>
