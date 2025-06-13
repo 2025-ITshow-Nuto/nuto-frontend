@@ -45,14 +45,27 @@
   font-size: 12px;
 }
 
-.ExplainButton {
-  width: 135px;
+.ButtonContainer {
+  display: flex;
+  column-gap: 20px;
+}
+
+.ExplainButton,
+.NutoButton {
+  flex: 1;
   height: 41px;
-  background-color: #424242;
   border: 0;
   border-radius: 10px;
   outline: none;
   color: #ffffff;
+}
+
+.ExplainButton {
+  background-color: #424242;
+}
+
+.NutoButton {
+  background-color: #a1302a;
 }
 
 .PostsContainer {
@@ -70,16 +83,4 @@
 
 .PostsContainer > button:active {
   font-weight: bold;
-}
-
-.NutoButton {
-  position: fixed;
-  width: 124px;
-  height: 43px;
-  border: 1px solid #424242;
-  outline: none;
-  border-radius: 27px;
-  right: 20px;
-  bottom: 100px;
-  background-color: #fcf9f3;
 }

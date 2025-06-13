@@ -1,11 +1,11 @@
 import axios from "axios";
 import styles from "../styles/Comment.module.css";
 import { useEffect, useState } from "react";
-import { format, toZonedTime } from "date-fns-tz";
 import ChatBox from "./ChatBox";
 import { motion, useDragControls, useAnimation } from "framer-motion";
+import { format } from "date-fns-tz";
 
-const timeZone = "Asia/Seoul";
+const zone = "Asia/Seoul";
 
 function Comment({
   postId,
@@ -57,6 +57,23 @@ function Comment({
       });
     }
   };
+  function convertISOToKSTString(isoString) {
+    // "2025-06-13T05:16:07.548Z" 형식 가정
+    if (!isoString || isoString.length < 16) return null;
+
+    const month = isoString.slice(5, 7);
+    const day = isoString.slice(8, 10);
+    let hour = parseInt(isoString.slice(11, 13), 10);
+    const min = isoString.slice(14, 16);
+
+    // KST 변환 (+9)
+    hour = (hour + 9) % 24;
+
+    // 두 자리로 맞춤
+    const hourStr = hour.toString().padStart(2, "0");
+
+    return `${month}-${day} ${hourStr}:${min}`;
+  }
 
   return (
     <motion.div
@@ -77,22 +94,19 @@ function Comment({
       >
         <div className={styles.bar}></div>
       </motion.div>
-      <div 
-        className={styles.commentContainer}
-      >
+      <div className={styles.commentContainer}>
         <div>
           {otherComment &&
             otherComment.map((comment, i) => {
-              const zonedDate = toZonedTime(comment.createdAt, timeZone);
-              const formatted = format(zonedDate, "MM-dd HH:mm", {
-                timeZone,
-              });
+              const rawData = comment.createdAt;
+              // const formattedDate = convertISOToKSTString(rawData);
+              // console.log(rawData);
               return (
                 <div className={styles.commentBox}>
                   <p>{comment.name}</p>
                   <ChatBox
                     type="check"
-                    time={formatted}
+                    time={rawData}
                     comment={comment.comment}
                   />
                 </div>

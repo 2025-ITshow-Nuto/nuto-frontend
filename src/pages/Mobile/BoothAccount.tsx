@@ -59,12 +59,17 @@ function BoothAccount() {
           <p className={style.boothName}>{selectedBooth.name}</p>
           <p className={style.boothExplain}>{selectedBooth.type}</p>
         </div>
-        <button
-          className={style.ExplainButton}
-          onClick={() => navigate(`/booths/${boothId}`)}
-        >
-          소개
-        </button>
+        <div className={style.ButtonContainer}>
+          <button
+            className={style.ExplainButton}
+            onClick={() => navigate(`/booths/${boothId}`)}
+          >
+            소개
+          </button>
+          <button onClick={handleClick} className={style.NutoButton}>
+            누토 남기기
+          </button>
+        </div>
         <div className={style.PostsContainer}>
           <button
             onClick={() => setType("polariod")}
@@ -87,10 +92,6 @@ function BoothAccount() {
         </div>
         <BoothCategory type={type} boothId={boothId} />
       </section>
-
-      <button onClick={handleClick} className={style.NutoButton}>
-        누토 남기기
-      </button>
 
       <Footer />
     </div>
