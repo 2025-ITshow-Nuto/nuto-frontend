@@ -3,10 +3,8 @@ import styles from "../styles/Comment.module.css";
 import { useEffect, useState } from "react";
 import ChatBox from "./ChatBox";
 import { motion, useDragControls, useAnimation } from "framer-motion";
-import { format, parseISO } from "date-fns";
-import { toZonedTime } from "date-fns-tz";
-
-const timeZone = "Asia/Seoul";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
 
 function Comment({
   postId,
@@ -83,24 +81,19 @@ function Comment({
           {otherComment &&
             otherComment.map((comment, i) => {
               const rawDate = comment.createdAt;
-              const rawNewDate = new Date(rawDate);
+              dayjs.extend(utc);
 
-              const formatDate =
-                rawNewDate.getMonth() +
-                1 +
-                "." +
-                rawNewDate.getDate() +
-                " " +
-                rawNewDate.getHours() +
-                ":" +
-                rawNewDate.getMinutes();
+              const formatted = dayjs
+                .utc(rawDate)
+                .local()
+                .format("MM-DD HH:mm");
 
               return (
                 <div className={styles.commentBox}>
                   <p>{comment.name}</p>
                   <ChatBox
                     type="check"
-                    time={formatDate}
+                    time={formatted}
                     comment={comment.comment}
                   />
                 </div>
