@@ -16,6 +16,7 @@ function Comment({
   const animation = useAnimation();
   const [otherComment, setOtherComment] = useState([]);
   const [comment, setComment] = useState("");
+  const [name, setName] = useState('')
   const [showInput, setShowInput] = useState(false)
 
   const close = (e) => {
@@ -33,6 +34,11 @@ function Comment({
     setComment("");
     fetch();
   };
+
+  useEffect(() => {
+    if(name.trim() === '') return 
+    sendComment(name)
+  }, [name])
 
   const fetch = async () => {
     const response = await axios.get(
@@ -55,11 +61,6 @@ function Comment({
       });
     }
   };
-
-  const handleClick = () => {
-    if(comment.trim() === '') return;
-    setShowInput(true)
-  }
 
   return (
     <motion.div
@@ -109,13 +110,13 @@ function Comment({
           <img
             src="/images/sendButton.png"
             alt="sendButton"
-            onClick={handleClick}
+            onClick={() => setShowInput(true)}
             className={styles.sendBtn}
           />
         </div>
       </div>
       {showInput && (
-        <InputModal q="이름을 입력해주세요" send={sendComment} setShowInput={setShowInput} />
+        <InputModal q="이름을 입력해주세요" setState={setName} setShowInput={setShowInput} />
       )}
     </motion.div>
   );

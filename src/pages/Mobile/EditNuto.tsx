@@ -10,6 +10,7 @@ import { useImage } from "../../context/ImageContext";
 import bcrypt from "bcryptjs";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import InputModal from "../../components/InputModal";
 
 function EditNuto() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -22,6 +23,8 @@ function EditNuto() {
   const { polariodFile, setPolariodFile } = usePolariod();
   const { setImage } = useImage();
   const navigate = useNavigate();
+  const [password, setPassword] = useState('')
+  const [showInput, setShowInput] = useState(false)
 
   const tomatos = [
     { src: "/images/redTomato.png", comment: "최고였다는 극찬" },
@@ -178,9 +181,9 @@ function EditNuto() {
     if (negativeEmotions.includes(label.label)) {
       alert("부정적인 문장은 금지되어 있습니다.");
       return;
-    } else {
-      const password = prompt("비밀번호를 입력하세요.");
-      if (!password) {
+    } else {  
+      if (password.trim() === '') {
+        console.log(password);
         alert("비밀번호를 입력해야 합니다.");
         return;
       }
@@ -227,9 +230,18 @@ function EditNuto() {
     }
   };
 
+  useEffect(() => {
+    if(password.trim() === '') return
+    setPolariodImage()
+  }, [password])
+
+  const getPassword = () => {
+    setShowInput(true)
+  }
+
   return (
     <div className={def.Body}>
-      <Header prevSrc="-1" nextSrc="" saveImage={setPolariodImage} />
+      <Header prevSrc="-1" nextSrc="" saveImage={getPassword} />
       <div className={style.NutoContainer}>
         <p>토마토를 선택해 주세요.</p>
         <div className={style.ChooseTomatoContainer}>
@@ -256,6 +268,9 @@ function EditNuto() {
         </div>
       </div>
       <Footer />
+      {showInput && (
+        <InputModal q="비밀번호를 입력하세요." setState={setPassword} setShowInput={setShowInput} />
+      )}
     </div>
   );
 }

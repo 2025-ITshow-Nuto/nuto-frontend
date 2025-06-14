@@ -8,7 +8,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Comment {
   _id: string;
@@ -37,12 +37,13 @@ function Post({ post, refetchPost, setSelectPost }: PostProps) {
   // console.log(process.env.REACT_APP_SALT_VALUE);
   const [showInput, setShowInput] = useState(false)
   const [postId, setPostId] = useState('')
+  const [password, setPassword] = useState('')
   const hashing = async (password: string) => {
     const salt = process.env.REACT_APP_SALT_VALUE;
     return await bcrypt.hash(password, salt);
   };
 
-  const handleClick = async (password: string) => {
+  const handleClick = async () => {
     const hashedPassword = await hashing(password);
 
     // console.log(postId, hashedPassword);
@@ -60,6 +61,11 @@ function Post({ post, refetchPost, setSelectPost }: PostProps) {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    if(password.trim() === '') return
+    handleClick()
+  }, [password])
 
   return (
     <div className={style.post} key={post._id}>
@@ -109,7 +115,7 @@ function Post({ post, refetchPost, setSelectPost }: PostProps) {
         </div>
       </div>
       {showInput && (
-        <InputModal q="포스트 비밀번호를 입력해주세요" send={handleClick} setShowInput={setShowInput} />
+        <InputModal q="포스트 비밀번호를 입력해주세요" setState={setPassword} setShowInput={setShowInput} />
       )}
     </div>
   );

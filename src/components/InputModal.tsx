@@ -4,18 +4,16 @@ import styles from "../styles/InputModal.module.css"
 
 type InputModalProps = {
     q: string,
-    postId?: string,
-    send?: (val:string) => void,
+    setState: (val?:string) => void,
     setShowInput: (val:boolean) => void
 }
 
-export default function InputModal({q, send, setShowInput}:InputModalProps) {
+export default function InputModal({q, setState, setShowInput}:InputModalProps) {
     const [val, setVal] = useState('')
     const handleClick = () => {
         if(val.trim() === '') return;
-        console.log(val);
         setShowInput(false)
-        send(val)
+        setState(val)
     }
 
     return (
