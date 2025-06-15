@@ -23,6 +23,7 @@
 .toggle-container > p {
   color: #fefbf5;
   font-size: 12px;
+  margin-right: 10px;
 }
 
 .toggle-container img {
