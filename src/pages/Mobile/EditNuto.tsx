@@ -77,28 +77,11 @@ function EditNuto() {
       textBox.left = (canvasWidth - textBox.width) / 2;
       textBox.top = (canvasHeight - textBox.height) / 2;
       textObjectRef.current = textBox;
-      let clickCount = 0;
-      let clickTimer: NodeJS.Timeout | null = null;
 
-      textBox.on("selected", () => {
-        clickCount++;
-
-        if (clickTimer) clearTimeout(clickTimer);
-
-        clickTimer = setTimeout(() => {
-          clickCount = 0;
-        }, 400);
-
-        console.log(clickCount);
-
-        if (clickCount === 1) {
-          textBox.enterEditing();
-          textBox.selectAll();
-        } else if (clickCount === 2) {
-          textBox.enterEditing();
-          // selectAll() 안 하면 커서 깜빡임
-        }
+      textBox.on("mousedblclick", () => {
+        textBox.selectAll();
       });
+
       fabricCanvas?.add(textBox);
     }
 
