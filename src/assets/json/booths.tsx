@@ -4,6 +4,7 @@ type BoothType = Booth & {
   booth_id: string;
   s3_path: string;
   logo: string;
+  mainColor: string;
 };
 
 export const boothsData: BoothType[] = [
@@ -19,6 +20,7 @@ export const boothsData: BoothType[] = [
     booth_id: "nuto",
     s3_path: "nuto",
     logo: "/images/boothName.svg",
+    mainColor: "#C5362E",
   },
   {
     name: "미림취뽀",
@@ -32,6 +34,7 @@ export const boothsData: BoothType[] = [
     booth_id: "미림취뽀",
     s3_path: "미림취뽀",
     logo: "/images/boothName.svg",
+    mainColor: "#C5362E",
   },
   {
     name: "미림마법고민해결",
@@ -45,6 +48,7 @@ export const boothsData: BoothType[] = [
     booth_id: "미림마법고민해결",
     s3_path: "미림마법고민해결",
     logo: "/images/boothName.svg",
+    mainColor: "#C5362E",
   },
   {
     name: "Soft Whisper",
@@ -58,6 +62,7 @@ export const boothsData: BoothType[] = [
     booth_id: "softwhisper",
     s3_path: "softwhisper",
     logo: "/images/boothName.svg",
+    mainColor: "#C5362E",
   },
   {
     name: "Ozmate",
@@ -71,6 +76,7 @@ export const boothsData: BoothType[] = [
     booth_id: "ozmate",
     s3_path: "ozmate",
     logo: "/images/logos/ozmate.png",
+    mainColor: "#FFF9C4",
   },
   {
     name: "워클리",
@@ -84,6 +90,7 @@ export const boothsData: BoothType[] = [
     booth_id: "workly",
     s3_path: "workly",
     logo: "/images/boothName.svg",
+    mainColor: "",
   },
   {
     name: "InterYou",
@@ -97,6 +104,7 @@ export const boothsData: BoothType[] = [
     booth_id: "interyou",
     s3_path: "interyou",
     logo: "/images/boothName.svg",
+    mainColor: "#B3CBFF",
   },
   {
     name: "미림페이",
@@ -110,6 +118,7 @@ export const boothsData: BoothType[] = [
     booth_id: "mirimpay",
     s3_path: "mirimpay",
     logo: "/images/boothName.svg",
+    mainColor: "",
   },
   {
     name: "Dearpal",
@@ -123,6 +132,7 @@ export const boothsData: BoothType[] = [
     booth_id: "dearpal",
     s3_path: "dearpal",
     logo: "/images/boothName.svg",
+    mainColor: "",
   },
   {
     name: "Harugo",
@@ -136,6 +146,7 @@ export const boothsData: BoothType[] = [
     booth_id: "harugo",
     s3_path: "harugo",
     logo: "https://drive.google.com/open?id=1fer4ApqMaNvG3yVH-aBYZ5mE6RWSJukM",
+    mainColor: "#FD7033",
   },
   {
     name: "짤메이커",
@@ -149,6 +160,7 @@ export const boothsData: BoothType[] = [
     booth_id: "zzalmaker",
     s3_path: "zzalmaker",
     logo: "https://drive.google.com/open?id=1-PHEnM6LUOA1s-RO8TEuu-DJFAvvWaAA",
+    mainColor: "#A8B1DA",
   },
   {
     name: "Q&A",
@@ -162,6 +174,7 @@ export const boothsData: BoothType[] = [
     booth_id: "q&a",
     s3_path: "q&a",
     logo: "https://drive.google.com/open?id=1-PHEnM6LUOA1s-RO8TEuu-DJFAvvWaAA",
+    mainColor: "#F2AA9C",
   },
   {
     name: "Migwarts",
@@ -175,6 +188,7 @@ export const boothsData: BoothType[] = [
     booth_id: "migwarts",
     s3_path: "migwarts",
     logo: "/images/logos/migwarts.png",
+    mainColor: "#4C1E1E",
   },
   {
     name: "Interactive",
@@ -196,6 +210,7 @@ export const boothsData: BoothType[] = [
     booth_id: "interactive",
     s3_path: "interactive",
     logo: "/images/logos/interactive.png",
+    mainColor: "#E10CA1",
   },
   {
     name: "Journimal",
@@ -209,6 +224,7 @@ export const boothsData: BoothType[] = [
     booth_id: "journimal",
     s3_path: "journimal",
     logo: "/images/logos/journimal.png",
+    mainColor: "#022169",
   },
   {
     name: "Momenpick",
@@ -222,6 +238,7 @@ export const boothsData: BoothType[] = [
     booth_id: "momenpick",
     s3_path: "momenpick",
     logo: "/images/logos/momenpick.png",
+    mainColor: "#714946",
   },
   {
     name: "밥밥밥",
@@ -235,6 +252,7 @@ export const boothsData: BoothType[] = [
     booth_id: "babbabbab",
     s3_path: "babbabbab",
     logo: "/images/logos/babbabbab.png",
+    mainColor: "#FFAD0A",
   },
   {
     name: "CAREER TEEN",
@@ -248,6 +266,7 @@ export const boothsData: BoothType[] = [
     booth_id: "careerteen",
     s3_path: "careerteen",
     logo: "/images/logos/careerteen.png",
+    mainColor: "#714946",
   },
   {
     name: "미림 마법 고민 해결",
@@ -261,6 +280,7 @@ export const boothsData: BoothType[] = [
     booth_id: "미림마법고민해결",
     s3_path: "미림마법고민해결",
     logo: "/images/logos/미림마법고민해결.png",
+    mainColor: "",
   },
   {
     name: "오늘도 잘먹었습니다",
@@ -274,6 +294,7 @@ export const boothsData: BoothType[] = [
     booth_id: "오잘먹",
     s3_path: "오잘먹",
     logo: "/images/logos/오잘먹.png",
+    mainColor: "#AAAE32",
   },
   {
     name: "Chuu",
@@ -287,6 +308,7 @@ export const boothsData: BoothType[] = [
     booth_id: "chuu",
     s3_path: "chuu",
     logo: "/images/logos/chuu.png",
+    mainColor: "#65E9FF",
   },
   {
     name: "Automat",
@@ -300,6 +322,7 @@ export const boothsData: BoothType[] = [
     booth_id: "automat",
     s3_path: "automat",
     logo: "/images/logos/automat.png",
+    mainColor: "#00A4C8",
   },
   {
     name: "Don't say that",
@@ -313,6 +336,7 @@ export const boothsData: BoothType[] = [
     booth_id: "dontsaythat",
     s3_path: "dontsaythat",
     logo: "/images/logos/dontsaythat.png",
+    mainColor: "#F8AE01",
   },
   {
     name: "WePick",
@@ -326,5 +350,6 @@ export const boothsData: BoothType[] = [
     booth_id: "wepick",
     s3_path: "wepick",
     logo: "/images/logos/wepick.png",
+    mainColor: "#939393",
   },
 ];

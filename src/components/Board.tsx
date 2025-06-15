@@ -47,6 +47,7 @@ const Board: React.FC<BoothProps> = ({
         alt="보드"
         className={style.boardImg}
         style={{ width: width }}
+        loading="lazy"
       />
       <div className={style.BoothBox}>
         <Booth

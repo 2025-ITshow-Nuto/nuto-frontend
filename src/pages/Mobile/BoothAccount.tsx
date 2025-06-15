@@ -66,7 +66,11 @@ function BoothAccount() {
           >
             소개
           </button>
-          <button onClick={handleClick} className={style.NutoButton}>
+          <button
+            onClick={handleClick}
+            className={style.NutoButton}
+            style={{ backgroundColor: selectedBooth.mainColor }}
+          >
             누토 남기기
           </button>
         </div>

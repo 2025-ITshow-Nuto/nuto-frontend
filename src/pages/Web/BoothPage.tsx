@@ -23,6 +23,7 @@ function BoothPage() {
           height={44}
           style={{ marginTop: "5px" }}
           onClick={() => handleClick("/intro")}
+          loading="lazy"
         />
         <span>
           <span
@@ -37,6 +38,7 @@ function BoothPage() {
         src="/images/Garden.jpg"
         alt="QR"
         style={{ width: "100vw", height: "100vh", scrollBehavior: "smooth" }}
+        loading="lazy"
       />
       <div className={style.boothContainer}>
         {boothsData.map((booth, index) => {
