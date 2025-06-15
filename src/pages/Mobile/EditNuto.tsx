@@ -11,6 +11,7 @@ import bcrypt from "bcryptjs";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import InputModal from "../../components/InputModal";
+import { text } from "stream/consumers";
 
 function EditNuto() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -78,8 +79,9 @@ function EditNuto() {
       textBox.top = (canvasHeight - textBox.height) / 2;
       textObjectRef.current = textBox;
 
-      textBox.on("mousedblclick", () => {
+      textBox.on("mousedown", () => {
         textBox.selectAll();
+        console.log("down");
       });
 
       fabricCanvas?.add(textBox);
