@@ -132,7 +132,7 @@ export const boothsData: BoothType[] = [
     booth_id: "dearpal",
     s3_path: "dearpal",
     logo: "/images/boothName.svg",
-    mainColor: "",
+    mainColor: "#D4B6E8",
   },
   {
     name: "Harugo",
@@ -405,7 +405,7 @@ export const boothsData: BoothType[] = [
     booth_id: "momento",
     s3_path: "momento",
     logo: "/images/logos/momento.png",
-    mainColor: "#939393",
+    mainColor: "#F6C6D8",
   },
   {
     name: "b3ats",
