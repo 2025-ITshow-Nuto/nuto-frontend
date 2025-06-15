@@ -10,20 +10,62 @@ interface Booth {
   booth_id: string;
   members: string[];
   s3_path: string;
+  img: string;
+  logo: string;
 }
 
 function Booths() {
   const [booths, setBooths] = useState<Booth[]>(boothsData);
+  const [boothsType, setBoothsType] = useState<"total" | "design">("total");
+
+  const setBoothType = (type: string) => {
+    if (type === "design") {
+      const designBooths = boothsData.filter(
+        (booth) => booth.developer.length === 0
+      );
+      setBooths(designBooths);
+      setBoothsType("design");
+    } else {
+      setBooths(boothsData);
+      setBoothsType("total");
+    }
+  };
 
   return (
     <div
-      style={{ backgroundImage: "url(/images/boothsBackground.png)" }}
+      style={{
+        backgroundImage: "url(/images/boothsBackground.png)",
+        overflow: "hidden",
+      }}
       className={style.body}
     >
       <Helmet>
         <title>booth explain</title>
       </Helmet>
+
       <p className={style.text}>다양한 부스들이 있는 텃밭을 구경해보세요!</p>
+      <div className={style.boothTypeSelectContainer}>
+        <button
+          className={
+            boothsType === "total"
+              ? style.selectedBoothType
+              : style.noneSelectedBoothType
+          }
+          onClick={() => setBoothType("total")}
+        >
+          전체
+        </button>
+        <button
+          className={
+            boothsType === "design"
+              ? style.selectedBoothType
+              : style.noneSelectedBoothType
+          }
+          onClick={() => setBoothType("design")}
+        >
+          디자인과
+        </button>
+      </div>
       <div className={style.boardContainer}>
         {booths.length > 0 ? (
           booths.map((booth, index) => (

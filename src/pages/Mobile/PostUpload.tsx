@@ -10,7 +10,7 @@ import { boothsData } from "../../assets/json/booths";
 import { Helmet } from "react-helmet";
 type BoothType = {
   name: string;
-  type: ("웹사이트" | "게임" | "앱")[];
+  type: ("웹사이트" | "게임" | "앱" | "웹" | "키오스크")[];
   img: string;
   developer: string[];
   designer: string[];
@@ -19,6 +19,7 @@ type BoothType = {
   members: string[];
   booth_id: string;
   s3_path: string;
+  logo: string;
 };
 
 function PostUpload() {

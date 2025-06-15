@@ -3,7 +3,6 @@ import Footer from "../../components/Footer";
 import Booth from "../../components/Booth";
 import style from "../../styles/Search.module.css";
 import { usePostInfo } from "../../context/PostInfoContext";
-import axios from "axios";
 import { boothsData } from "../../assets/json/booths";
 import { Helmet } from "react-helmet";
 
@@ -11,6 +10,8 @@ interface BoothType {
   booth_id: string;
   members: string[];
   s3_path: string;
+  img: string;
+  logo: string;
 }
 
 function Search() {

@@ -8,6 +8,8 @@ interface BoothProps {
     booth_id: string;
     members: string[];
     s3_path: string;
+    img: string;
+    logo: string;
   };
   width?: number;
   fontSize?: number;
@@ -45,6 +47,7 @@ const Board: React.FC<BoothProps> = ({
         alt="보드"
         className={style.boardImg}
         style={{ width: width }}
+        loading="lazy"
       />
       <div className={style.BoothBox}>
         <Booth
