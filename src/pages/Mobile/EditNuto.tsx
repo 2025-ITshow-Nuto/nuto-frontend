@@ -23,8 +23,8 @@ function EditNuto() {
   const { polariodFile, setPolariodFile } = usePolariod();
   const { setImage } = useImage();
   const navigate = useNavigate();
-  const [password, setPassword] = useState('')
-  const [showInput, setShowInput] = useState(false)
+  const [password, setPassword] = useState("");
+  const [showInput, setShowInput] = useState(false);
 
   const tomatos = [
     { src: "/images/redTomato.png", comment: "최고였다는 극찬" },
@@ -77,6 +77,28 @@ function EditNuto() {
       textBox.left = (canvasWidth - textBox.width) / 2;
       textBox.top = (canvasHeight - textBox.height) / 2;
       textObjectRef.current = textBox;
+      let clickCount = 0;
+      let clickTimer: NodeJS.Timeout | null = null;
+
+      textBox.on("selected", () => {
+        clickCount++;
+
+        if (clickTimer) clearTimeout(clickTimer);
+
+        clickTimer = setTimeout(() => {
+          clickCount = 0;
+        }, 400);
+
+        console.log(clickCount);
+
+        if (clickCount === 1) {
+          textBox.enterEditing();
+          textBox.selectAll();
+        } else if (clickCount === 2) {
+          textBox.enterEditing();
+          // selectAll() 안 하면 커서 깜빡임
+        }
+      });
       fabricCanvas?.add(textBox);
     }
 
@@ -181,8 +203,8 @@ function EditNuto() {
     if (negativeEmotions.includes(label.label)) {
       alert("부정적인 문장은 금지되어 있습니다.");
       return;
-    } else {  
-      if (password.trim() === '') {
+    } else {
+      if (password.trim() === "") {
         console.log(password);
         alert("비밀번호를 입력해야 합니다.");
         return;
@@ -231,13 +253,13 @@ function EditNuto() {
   };
 
   useEffect(() => {
-    if(password.trim() === '') return
-    setPolariodImage()
-  }, [password])
+    if (password.trim() === "") return;
+    setPolariodImage();
+  }, [password]);
 
   const getPassword = () => {
-    setShowInput(true)
-  }
+    setShowInput(true);
+  };
 
   return (
     <div className={def.Body}>
@@ -269,7 +291,11 @@ function EditNuto() {
       </div>
       <Footer />
       {showInput && (
-        <InputModal q="비밀번호를 입력하세요." setState={setPassword} setShowInput={setShowInput} />
+        <InputModal
+          q="비밀번호를 입력하세요."
+          setState={setPassword}
+          setShowInput={setShowInput}
+        />
       )}
     </div>
   );
