@@ -10,6 +10,8 @@ interface Booth {
   booth_id: string;
   members: string[];
   s3_path: string;
+  img: string;
+  logo: string;
 }
 
 function Booths() {

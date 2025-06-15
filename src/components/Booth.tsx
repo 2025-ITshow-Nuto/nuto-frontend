@@ -7,6 +7,8 @@ interface BoothProps {
     booth_id: string;
     members: string[];
     s3_path: string;
+    img: string;
+    logo: string;
   };
   navi: {
     go: boolean;
@@ -43,18 +45,14 @@ const Booth: React.FC<BoothProps> = ({ booth, navi, boardStyle }) => {
       className={style.boothContainer}
       onClick={() => goPost(booth.booth_id)}
     >
-      <img
-        src={`/images/booths/${booth.booth_id}.png`}
-        alt="부스 이미지"
-        className={style.boothImg}
-      />
+      <img src={booth.img} alt="부스 이미지" className={style.boothImg} />
       <div className={style.gradient} />
       <div
         className={style.boothInfo}
         style={{ bottom: boardStyle.bottom || 8 }}
       >
         <img
-          src="/images/boothName.svg"
+          src={booth.logo}
           alt="부스 이름"
           className={style.boothName}
           style={{ width: boardStyle.logoWidth }}
