@@ -31,15 +31,23 @@ function BoothInfo() {
       <img src={booth.img} alt="부스이미지" className={style.boothImg} />
       <div className={style.boothInfo}>
         <div>
-          <h1 className={style.name}>{booth.name}</h1>
+          <h1 className={style.name} style={{ color: booth.mainColor }}>
+            {booth.name}
+          </h1>
           <p className={style.type}>{booth.type.join(" | ")}</p>
         </div>
         <div className={style.member}>
           <p>
-            <span className="dept">개발자</span> {booth.developer.join(", ")}
+            <span className="dept" style={{ fontWeight: "bold" }}>
+              개발자
+            </span>{" "}
+            {booth.developer.join(", ")}
           </p>
           <p>
-            <span className="dept">디자이너</span> {booth.designer.join(", ")}
+            <span className="dept" style={{ fontWeight: "bold" }}>
+              디자이너
+            </span>{" "}
+            {booth.designer.join(", ")}
           </p>
         </div>
         <p className={style.comment}>{booth.comment}</p>

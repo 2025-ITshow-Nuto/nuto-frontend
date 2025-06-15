@@ -27,5 +27,8 @@
   flex-wrap: wrap;
   justify-content: space-around;
   row-gap: 20px;
+  height: 100%;
   overflow: scroll;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
 }

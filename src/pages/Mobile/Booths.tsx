@@ -19,7 +19,10 @@ function Booths() {
 
   return (
     <div
-      style={{ backgroundImage: "url(/images/boothsBackground.png)" }}
+      style={{
+        backgroundImage: "url(/images/boothsBackground.png)",
+        overflow: "hidden",
+      }}
       className={style.body}
     >
       <Helmet>

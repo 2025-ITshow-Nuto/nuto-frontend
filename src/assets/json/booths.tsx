@@ -53,7 +53,7 @@ export const boothsData: BoothType[] = [
   {
     name: "Soft Whisper",
     type: ["웹사이트"],
-    img: "/images/booths/softwhisper.png",
+    img: "/images/booths/softwhisper.jpg",
     developer: ["김서연", "이서윤"],
     designer: ["김서연", "이서윤"],
     comment:
@@ -90,7 +90,7 @@ export const boothsData: BoothType[] = [
     booth_id: "workly",
     s3_path: "workly",
     logo: "/images/boothName.svg",
-    mainColor: "",
+    mainColor: "#3B44E6",
   },
   {
     name: "InterYou",
@@ -145,7 +145,7 @@ export const boothsData: BoothType[] = [
     members: ["이성미", "정민경", "서유미"],
     booth_id: "harugo",
     s3_path: "harugo",
-    logo: "https://drive.google.com/open?id=1fer4ApqMaNvG3yVH-aBYZ5mE6RWSJukM",
+    logo: "/images/logos/harugo.png",
     mainColor: "#FD7033",
   },
   {
@@ -159,7 +159,7 @@ export const boothsData: BoothType[] = [
     members: ["박가빈"],
     booth_id: "zzalmaker",
     s3_path: "zzalmaker",
-    logo: "https://drive.google.com/open?id=1-PHEnM6LUOA1s-RO8TEuu-DJFAvvWaAA",
+    logo: "/images/logos/짤메이커.png",
     mainColor: "#A8B1DA",
   },
   {
@@ -173,7 +173,7 @@ export const boothsData: BoothType[] = [
     members: ["김리연", "박가빈", "채연우", "이영서"],
     booth_id: "q&a",
     s3_path: "q&a",
-    logo: "https://drive.google.com/open?id=1-PHEnM6LUOA1s-RO8TEuu-DJFAvvWaAA",
+    logo: "/images/logos/q&a.png",
     mainColor: "#F2AA9C",
   },
   {
@@ -280,7 +280,7 @@ export const boothsData: BoothType[] = [
     booth_id: "미림마법고민해결",
     s3_path: "미림마법고민해결",
     logo: "/images/logos/미림마법고민해결.png",
-    mainColor: "",
+    mainColor: "#AF88F0",
   },
   {
     name: "오늘도 잘먹었습니다",
