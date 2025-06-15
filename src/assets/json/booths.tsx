@@ -352,4 +352,32 @@ export const boothsData: BoothType[] = [
     logo: "/images/logos/wepick.png",
     mainColor: "#939393",
   },
+  {
+    name: "hooking",
+    type: ["앱", "웹"],
+    img: "/images/booths/hooking.png",
+    developer: [],
+    designer: ["탁경민"],
+    comment:
+      "오늘도 과식한 뇌를 위한 도파민 레스토랑 (건강한 도파민으로 일상을 채우는 21일 코스요리 루틴 형성 솔루션)",
+    members: ["탁경민"],
+    booth_id: "hooking",
+    s3_path: "hooking",
+    logo: "/images/logos/hooking.png",
+    mainColor: "#121212",
+  },
+  {
+    name: "b3ats",
+    type: ["앱", "웹"],
+    img: "/images/booths/b3ats.png",
+    developer: [],
+    designer: ["조혜원"],
+    comment:
+      "b3ats는 실력 중심의 경쟁에 지친 이들이, 다시금 랩의 본질과 마주할 수 있도록 만들어진 랩 메이킹 & 싸이퍼 플랫폼입니다. 전문가만이 주인공이 되는 세상에서 비켜나, 방구석에서 홀로 비트를 틀며 가사를 써내려가던 이들에게 AI는 단순한 도구가 아닌, 든든한 동료가 되어줍니다. 이곳에선 잘하는 것보다 진심이, 완성도보다 용기가 더 크게 환영받습니다. 혼자여도 괜찮고, 서툴러도 괜찮습니다. b3ats는 랩을 사랑하는 누구나 자유롭게 시작하고, 실험하고, 함께 성장할 수 있는 열린 힙합 커뮤니티입니다.",
+    members: ["조혜원"],
+    booth_id: "b3ats",
+    s3_path: "b3ats",
+    logo: "/images/logos/b3ats.png",
+    mainColor: "#939393",
+  },
 ];

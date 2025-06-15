@@ -11,7 +11,6 @@ import bcrypt from "bcryptjs";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import InputModal from "../../components/InputModal";
-import { text } from "stream/consumers";
 
 function EditNuto() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
