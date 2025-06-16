@@ -58,9 +58,8 @@ function NutoGarden() {
         console.error(error);
       }
     };
-    console.log(booth);
     fetchPosts();
-  }, []);
+  }, [navigate]);
 
   return (
     <div className={style.gardenContainer}>

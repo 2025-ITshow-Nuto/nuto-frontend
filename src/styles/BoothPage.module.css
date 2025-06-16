@@ -1,19 +1,35 @@
+@font-face {
+  font-family: "Ownglyph";
+  src: url("../fonts/온글잎 박다현체.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Nanum Gothic";
+  src: url("../fonts/NanumGothic.ttf") format("truetype");
+}
+
 .boothPageContainer {
   position: relative;
+  overflow: hidden;
 }
 
 .boothPageContainer > button {
   position: fixed;
   top: 30px;
   right: 30px;
-  font-family: "Ownglyph PDH";
+  font-family: "Ownglyph";
 }
 
 .boothContainer {
   display: flex;
   position: absolute;
   top: 100px;
-  padding: 80px;
+  padding: 69px 80px 260px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  height: 100%;
+  overflow: scroll;
+  margin: 100px 0;
 }
 
 .nutoHeader {

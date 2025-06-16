@@ -55,7 +55,7 @@ const Booth: React.FC<BoothProps> = ({ booth, navi, boardStyle }) => {
           src={booth.logo}
           alt="부스 이름"
           className={style.boothName}
-          style={{ maxWidth: boardStyle.logoWidth, maxHeight: "30px" }}
+          style={{ maxWidth: boardStyle.logoWidth, maxHeight: "20px" }}
         />
         <p
           className={style.memberName}

@@ -6,9 +6,9 @@ import { useEffect, useRef, useState } from "react";
 import { useImage } from "../../context/ImageContext";
 import { usePostInfo } from "../../context/PostInfoContext";
 import Booth from "../../components/Booth";
-import { boothsData } from "../../assets/json/booths";
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
+import { createClient } from "contentful";
 
 type BoothType = {
   name: string;
@@ -28,10 +28,9 @@ function PostUpload() {
   const imgRef = useRef<HTMLInputElement | null>(null);
   const [previewImage, setPreviewImage] = useState<string>("");
   const { image, setImage } = useImage();
-
   const { name, setName, location } = usePostInfo();
   const [selectedLocation, setSelectedLocation] = useState<BoothType>(null);
-
+  const [booths, setBooths] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -43,11 +42,44 @@ function PostUpload() {
   }, [navigate]);
 
   useEffect(() => {
-    const selectedBooth = boothsData.filter(
+    const selectedBooth = booths.filter(
       (booth) => booth.booth_id === location
     )[0];
     setSelectedLocation(selectedBooth);
   });
+
+  const client = createClient({
+    space: process.env.REACT_APP_CONTENTFUL_SPACE,
+    accessToken: process.env.CONTENTFUL_ACCESSTOKEN,
+  });
+
+  const fetchBooths = async () => {
+    const entries = await client.getEntries({
+      content_type: process.env.REACT_APP_CONTENTFUL_CONTENT_TYPE,
+    });
+    return entries.items.map((item) => item.fields);
+  };
+
+  useEffect(() => {
+    fetchBooths()
+      .then((data) => {
+        const formattedBooths = data.map((booth: any) => {
+          return {
+            booth_id: booth.boothId,
+            members: booth.members,
+            s3_path: booth.s3Path,
+            img: booth.img?.fields?.file.url || "",
+            logo: booth.logo?.fields?.file.url || "",
+            developer: booth.developer,
+            designer: booth.designer,
+          };
+        });
+        setBooths(formattedBooths);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
   const uploadImage = () => {
     if (imgRef.current) {
