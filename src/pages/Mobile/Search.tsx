@@ -45,8 +45,12 @@ function Search() {
             s3_path: booth.s3Path,
             img: booth.img?.fields?.file.url || "",
             logo: booth.logo?.fields?.file.url || "",
-            developer: booth.developer,
+            type: booth.type,
             designer: booth.designer,
+            developer: booth.developer,
+            comment: booth.comment.content[0].content[0].value,
+            name: booth.name,
+            mainColor: booth.mainColor,
           };
         });
         setBooths(formattedBooths);
@@ -114,7 +118,11 @@ function Search() {
         {booths.length > 0 ? (
           booths.map((booth) => (
             <div
-              style={{ borderRadius: "10px", overflow: "hidden" }}
+              style={{
+                borderRadius: "10px",
+                overflow: "hidden",
+                backgroundColor: `${booth.mainColor}`,
+              }}
               onClick={() => setLocation(booth.booth_id)}
             >
               <Booth
