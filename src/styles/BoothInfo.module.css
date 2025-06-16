@@ -8,7 +8,6 @@
   width: 100%;
   height: calc(100vh - 80px);
   background-color: #fdfaf4;
-  overflow: scroll;
 }
 .body::-webkit-scrollbar {
   width: 0;
@@ -18,7 +17,7 @@
 .header {
   display: flex;
   align-items: center;
-  margin: 50px 30px 20px;
+  margin: 20px 30px;
 }
 .back {
   width: 30px;
@@ -38,17 +37,20 @@ p {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin: 20px 30px;
+  margin: 20px 30px 100px;
 }
+
 .name {
   display: inline;
   color: #a1302a;
   margin-right: 15px;
 }
+
 .type {
   display: inline;
   color: #656565;
 }
+
 .dept {
   font-weight: bold;
 }
@@ -60,14 +62,23 @@ p {
   margin: 10px 0;
   text-align: justify;
   line-height: 140%;
+  margin-bottom: 150px;
 }
 
 .nuto {
   border: solid 1px #656565;
   border-radius: 27px;
-  color: #656565;
-  background-color: transparent;
   margin-left: auto;
   width: 125px;
   height: 45px;
+  position: fixed;
+  bottom: 100px;
+  right: 30px;
+  transition: transform 0.4s ease;
+  transform: translateY(0);
+  will-change: transform;
+}
+
+.nutoHide {
+  transform: translateY(200%);
 }

@@ -7,6 +7,11 @@ import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
 import { createClient } from "contentful";
 
+const client = createClient({
+  space: process.env.REACT_APP_CONTENTFUL_SPACE,
+  accessToken: process.env.REACT_APP_CONTENTFUL_ACCESSTOKEN,
+});
+
 function Search() {
   const [booths, setBooths] = useState([]);
   const [inputText, setInputText] = useState("");
@@ -22,11 +27,6 @@ function Search() {
       navigate("/nuto-garden"); // 태블릿/데스크톱은 즉시 이동
     }
   }, [navigate]);
-
-  const client = createClient({
-    space: process.env.REACT_APP_CONTENTFUL_SPACE,
-    accessToken: process.env.REACT_APP_CONTENTFUL_ACCESSTOKEN,
-  });
 
   const fetchBooths = async () => {
     const entries = await client.getEntries({

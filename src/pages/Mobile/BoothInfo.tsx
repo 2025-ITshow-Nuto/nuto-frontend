@@ -1,20 +1,39 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import style from "../../styles/BoothInfo.module.css";
 import Footer from "../../components/Footer";
 import { Helmet } from "react-helmet";
 import { createClient } from "contentful";
 
+const client = createClient({
+  space: process.env.REACT_APP_CONTENTFUL_SPACE,
+  accessToken: process.env.REACT_APP_CONTENTFUL_ACCESSTOKEN,
+});
+
 function BoothInfo() {
   const boothId = useParams().boothId;
   const [booths, setBooths] = useState([]);
-  const [booth] = booths.filter((booth) => booth.booth_id === boothId);
+  const booth = booths.find((booth) => booth.booth_id === boothId);
   const navigate = useNavigate();
+  const currentScrollY = useRef(window.scrollY);
+  const [visible, setVisible] = useState(true);
 
-  const client = createClient({
-    space: process.env.REACT_APP_CONTENTFUL_SPACE,
-    accessToken: process.env.REACT_APP_CONTENTFUL_ACCESSTOKEN,
-  });
+  useEffect(() => {
+    const handleScrollY = () => {
+      if (window.scrollY > currentScrollY.current) {
+        setVisible(false);
+      } else {
+        setVisible(true);
+      }
+      currentScrollY.current = window.scrollY;
+    };
+
+    window.addEventListener("scroll", handleScrollY);
+
+    return () => {
+      window.removeEventListener("scroll", handleScrollY);
+    };
+  }, []);
 
   const fetchBooths = async () => {
     const entries = await client.getEntries({
@@ -26,7 +45,6 @@ function BoothInfo() {
   useEffect(() => {
     fetchBooths()
       .then((data) => {
-        console.log(data);
         const formattedBooths = data.map((booth: any) => {
           return {
             booth_id: booth.boothId,
@@ -56,6 +74,16 @@ function BoothInfo() {
       navigate("/nuto-garden"); // 태블릿/데스크톱은 즉시 이동
     }
   }, [navigate]);
+
+  const getTextColor = (bgColor: string) => {
+    const c = bgColor.substring(1);
+    const rgb = parseInt(c, 16);
+    const r = (rgb >> 16) & 0xff;
+    const g = (rgb >> 8) & 0xff;
+    const b = (rgb >> 0) & 0xff;
+    const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    return luma < 127.5 ? "white" : "black";
+  };
 
   if (!booth)
     return <div>해당 부스의 정보가 아직 업데이트되지 않았습니다.</div>;
@@ -101,9 +129,14 @@ function BoothInfo() {
         <p className={style.comment} style={{ whiteSpace: "pre-line" }}>
           {booth.comment.replaceAll("<br/>", "\n")}
         </p>
+
         <button
-          className={style.nuto}
+          className={`${style.nuto} ${!visible ? style.nutoHide : ""}`}
           onClick={() => navigate(`/booth-account/${boothId}`)}
+          style={{
+            color: `${getTextColor(booth.mainColor)}`,
+            backgroundColor: `${booth.mainColor}`,
+          }}
         >
           부스 구경하기
         </button>

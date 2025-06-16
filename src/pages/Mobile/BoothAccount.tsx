@@ -11,19 +11,19 @@ import { usePostInfo } from "../../context/PostInfoContext";
 import { Helmet } from "react-helmet";
 import { createClient } from "contentful";
 
+const client = createClient({
+  space: process.env.REACT_APP_CONTENTFUL_SPACE,
+  accessToken: process.env.REACT_APP_CONTENTFUL_ACCESSTOKEN,
+});
+
 function BoothAccount() {
   const boothId = useParams().boothId;
   const [booths, setBooths] = useState([]);
-  const selectedBooth = booths.filter((booth) => booth.booth_id === boothId)[0];
+  const [selectedBooth, setSelectedbooth] = useState(null);
   const [type, setType] = useState<"nuto" | "polariod">("polariod");
   const navigate = useNavigate();
   const [totalPost, setTotalPost] = useState(0);
   const { setLocation } = usePostInfo();
-
-  const client = createClient({
-    space: process.env.REACT_APP_CONTENTFUL_SPACE,
-    accessToken: process.env.REACT_APP_CONTENTFUL_ACCESSTOKEN,
-  });
 
   const fetchBooths = async () => {
     const entries = await client.getEntries({
@@ -33,27 +33,42 @@ function BoothAccount() {
   };
 
   useEffect(() => {
-    fetchBooths()
-      .then((data) => {
-        const formattedBooths = data.map((booth: any) => {
-          return {
-            booth_id: booth.boothId,
-            members: booth.members,
-            s3_path: booth.s3Path,
-            img: booth.img?.fields?.file.url || "",
-            logo: booth.logo?.fields?.file.url || "",
-          };
-        });
-        setBooths(formattedBooths);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    fetchBooths().then((data) => {
+      const formattedBooths = data.map((booth: any) => ({
+        booth_id: booth.boothId,
+        members: booth.members,
+        s3_path: booth.s3Path,
+        img: booth.img?.fields?.file.url || "",
+        logo: booth.logo?.fields?.file.url || "",
+        type: booth.type,
+        designer: booth.designer,
+        developer: booth.developer,
+        comment: booth.comment.content[0].content[0].value,
+        name: booth.name,
+        mainColor: booth.mainColor,
+      }));
+      setBooths(formattedBooths);
+
+      const selectBooth = formattedBooths.find(
+        (booth) => booth.booth_id === boothId
+      );
+      setSelectedbooth(selectBooth);
+    });
   }, []);
 
   const handleClick = () => {
     setLocation(boothId);
     navigate("/post");
+  };
+
+  const getTextColor = (bgColor: string) => {
+    const c = bgColor.substring(1);
+    const rgb = parseInt(c, 16);
+    const r = (rgb >> 16) & 0xff;
+    const g = (rgb >> 8) & 0xff;
+    const b = (rgb >> 0) & 0xff;
+    const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    return luma < 127.5 ? "white" : "black";
   };
 
   useEffect(() => {
@@ -85,55 +100,78 @@ function BoothAccount() {
         <title>booth explain</title>
       </Helmet>
       <Header prevSrc={`/booths/${boothId}`} nextSrc="-1" />
-      <section className={style.Body}>
-        <div className={style.AccountInfoContainer}>
-          <img src={selectedBooth.img} alt={selectedBooth.img} />
-          <div>
-            <p>{totalPost}</p>
-            <p>게시글</p>
+      {selectedBooth && (
+        <section className={style.Body}>
+          <div className={style.AccountInfoContainer}>
+            <img src={selectedBooth.img} alt={selectedBooth.img} />
+            <div>
+              <p>{totalPost}</p>
+              <p>게시글</p>
+            </div>
           </div>
-        </div>
-        <div className={style.TitleContainer}>
-          <p className={style.boothName}>{selectedBooth.name}</p>
-          <p className={style.boothExplain}>{selectedBooth.type}</p>
-        </div>
-        <div className={style.ButtonContainer}>
-          <button
-            className={style.ExplainButton}
-            onClick={() => navigate(`/booths/${boothId}`)}
-          >
-            소개
-          </button>
-          <button
-            onClick={handleClick}
-            className={style.NutoButton}
-            style={{ backgroundColor: selectedBooth.mainColor }}
-          >
-            누토 남기기
-          </button>
-        </div>
-        <div className={style.PostsContainer}>
-          <button
-            onClick={() => setType("polariod")}
-            style={{
-              fontWeight: type === "polariod" ? "bold" : "",
-              borderBottom: type === "polariod" ? "1px solid #424242" : "",
-            }}
-          >
-            폴라로이드
-          </button>
-          <button
-            onClick={() => setType("nuto")}
-            style={{
-              fontWeight: type === "nuto" ? "bold" : "",
-              borderBottom: type === "nuto" ? "1px solid #424242" : "",
-            }}
-          >
-            토마토
-          </button>
-        </div>
-        <BoothCategory type={type} boothId={boothId} />
-      </section>
+          <div className={style.TitleContainer}>
+            <div className={style.BoothTitleContainer}>
+              <p className={style.boothName}>{selectedBooth.name}</p>
+              <p className={style.boothExplain}>{selectedBooth.type}</p>
+            </div>
+            <div className={style.member}>
+              {selectedBooth.developer?.length > 0 && (
+                <p>
+                  <span className="dept" style={{ fontWeight: "bold" }}>
+                    개발자
+                  </span>{" "}
+                  {selectedBooth.developer.join(", ")}
+                </p>
+              )}
+              <p>
+                <span className="dept" style={{ fontWeight: "bold" }}>
+                  디자이너
+                </span>{" "}
+                {selectedBooth.designer.join(", ")}
+              </p>
+            </div>
+          </div>
+          <div className={style.ButtonContainer}>
+            <button
+              className={style.ExplainButton}
+              onClick={() => navigate(`/booths/${boothId}`)}
+            >
+              소개
+            </button>
+            <button
+              onClick={handleClick}
+              className={style.NutoButton}
+              style={{
+                color: getTextColor(selectedBooth.mainColor),
+                backgroundColor: selectedBooth.mainColor,
+              }}
+            >
+              누토 남기기
+            </button>
+          </div>
+          <div className={style.PostsContainer}>
+            <button
+              onClick={() => setType("polariod")}
+              style={{
+                fontWeight: type === "polariod" ? "bold" : "",
+                borderBottom: type === "polariod" ? "1px solid #424242" : "",
+              }}
+            >
+              폴라로이드
+            </button>
+            <button
+              onClick={() => setType("nuto")}
+              style={{
+                fontWeight: type === "nuto" ? "bold" : "",
+                borderBottom: type === "nuto" ? "1px solid #424242" : "",
+              }}
+            >
+              토마토
+            </button>
+          </div>
+          <BoothCategory type={type} boothId={boothId} />
+        </section>
+      )}
 
       <Footer />
     </div>

@@ -5,17 +5,17 @@ import { useNavigate } from "react-router-dom";
 import { useIdleRedirect } from "../../hooks/useIdleTimer";
 import { createClient } from "contentful";
 
+const client = createClient({
+  space: process.env.REACT_APP_CONTENTFUL_SPACE,
+  accessToken: process.env.REACT_APP_CONTENTFUL_ACCESSTOKEN,
+});
+
 function BoothPage() {
   const [booths, setBooths] = useState([]);
   const navigate = useNavigate();
   const handleClick = (route: string) => {
     navigate(route);
   };
-
-  const client = createClient({
-    space: process.env.REACT_APP_CONTENTFUL_SPACE,
-    accessToken: process.env.REACT_APP_CONTENTFUL_ACCESSTOKEN,
-  });
 
   const fetchBooths = async () => {
     const entries = await client.getEntries({

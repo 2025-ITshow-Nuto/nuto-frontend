@@ -26,39 +26,40 @@
 
 .boardContainer {
   width: 100%;
-  padding: 0 10px;
-  display: flex;
+  padding: 0 10px 300px;
+  /* display: flex; */
   overflow: scroll;
   flex-wrap: wrap;
   justify-content: space-around;
   row-gap: 20px;
   height: 100%;
-  margin-bottom: 50px;
-  padding-bottom: 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  place-items: center;
+  margin-bottom: 100px;
 }
 
 .boothTypeSelectContainer {
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  column-gap: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  place-items: center;
 }
 
 .boothTypeSelectContainer > button {
   outline: none;
   border: 0;
-  font-size: 18px;
+  font-size: 14px;
   font-family: "Nanum Gothic";
   margin-bottom: 20px;
-  width: 120px;
-  padding: 10px 20px;
-  border-radius: 20px;
-  box-shadow: 2px 3px 10px 1px #80552a;
+  display: grid;
+  background-color: transparent;
+  padding-bottom: 10px;
 }
 
 .selectedBoothType {
-  background-color: #b23228;
   color: #ffffff;
+  border-bottom: 2px solid #b23228 !important;
 }
 
 .noneSelectedBoothType {
