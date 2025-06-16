@@ -25,7 +25,7 @@ function Search() {
 
   const client = createClient({
     space: process.env.REACT_APP_CONTENTFUL_SPACE,
-    accessToken: process.env.CONTENTFUL_ACCESSTOKEN,
+    accessToken: process.env.REACT_APP_CONTENTFUL_ACCESSTOKEN,
   });
 
   const fetchBooths = async () => {
