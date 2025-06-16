@@ -5,6 +5,7 @@ import Footer from "../../components/Footer";
 import axios from "axios";
 import { boothsData } from "../../assets/json/booths";
 import { Helmet } from "react-helmet";
+import { useNavigate } from "react-router-dom";
 
 interface Booth {
   booth_id: string;
@@ -17,6 +18,15 @@ interface Booth {
 function Booths() {
   const [booths, setBooths] = useState<Booth[]>(boothsData);
   const [boothsType, setBoothsType] = useState<"total" | "design">("total");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isWideScreen = window.innerWidth <= 500;
+
+    if (!isWideScreen) {
+      navigate("/nuto-garden"); // 태블릿/데스크톱은 즉시 이동
+    }
+  }, [navigate]);
 
   const setBoothType = (type: string) => {
     if (type === "design") {

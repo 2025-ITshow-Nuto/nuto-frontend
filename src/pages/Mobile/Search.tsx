@@ -5,6 +5,7 @@ import style from "../../styles/Search.module.css";
 import { usePostInfo } from "../../context/PostInfoContext";
 import { boothsData } from "../../assets/json/booths";
 import { Helmet } from "react-helmet";
+import { useNavigate } from "react-router-dom";
 
 interface BoothType {
   booth_id: string;
@@ -18,6 +19,16 @@ function Search() {
   const [booths, setBooths] = useState<BoothType[]>([]);
   const [inputText, setInputText] = useState("");
   const { location, setLocation } = usePostInfo();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isWideScreen = window.innerWidth <= 500;
+
+    if (!isWideScreen) {
+      navigate("/nuto-garden"); // 태블릿/데스크톱은 즉시 이동
+    }
+  }, [navigate]);
 
   const fetchBooths = async (name: string) => {
     try {
