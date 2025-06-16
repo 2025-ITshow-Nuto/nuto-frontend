@@ -6,15 +6,15 @@ import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
 import { createClient } from "contentful";
 
+const client = createClient({
+  space: process.env.REACT_APP_CONTENTFUL_SPACE,
+  accessToken: process.env.REACT_APP_CONTENTFUL_ACCESSTOKEN,
+});
+
 function Booths() {
   const [booths, setBooths] = useState([]);
   const [boothsType, setBoothsType] = useState<"total" | "design">("total");
   const navigate = useNavigate();
-
-  const client = createClient({
-    space: process.env.REACT_APP_CONTENTFUL_SPACE,
-    accessToken: process.env.REACT_APP_CONTENTFUL_ACCESSTOKEN,
-  });
 
   const fetchBooths = async () => {
     const entries = await client.getEntries({
@@ -33,8 +33,12 @@ function Booths() {
             s3_path: booth.s3Path,
             img: booth.img?.fields?.file.url || "",
             logo: booth.logo?.fields?.file.url || "",
-            developer: booth.developer,
+            type: booth.type,
             designer: booth.designer,
+            developer: booth.developer,
+            comment: booth.comment.content[0].content[0].value,
+            name: booth.name,
+            mainColor: booth.mainColor,
           };
         });
         setBooths(formattedBooths);

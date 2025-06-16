@@ -24,6 +24,11 @@ type BoothType = {
   logo: string;
 };
 
+const client = createClient({
+  space: process.env.REACT_APP_CONTENTFUL_SPACE,
+  accessToken: process.env.REACT_APP_CONTENTFUL_ACCESSTOKEN,
+});
+
 function PostUpload() {
   const imgRef = useRef<HTMLInputElement | null>(null);
   const [previewImage, setPreviewImage] = useState<string>("");
@@ -46,11 +51,6 @@ function PostUpload() {
       (booth) => booth.booth_id === location
     )[0];
     setSelectedLocation(selectedBooth);
-  });
-
-  const client = createClient({
-    space: process.env.REACT_APP_CONTENTFUL_SPACE,
-    accessToken: process.env.REACT_APP_CONTENTFUL_ACCESSTOKEN,
   });
 
   const fetchBooths = async () => {
