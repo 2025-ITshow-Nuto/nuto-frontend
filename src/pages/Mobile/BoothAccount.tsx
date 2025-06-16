@@ -111,8 +111,26 @@ function BoothAccount() {
             </div>
           </div>
           <div className={style.TitleContainer}>
-            <p className={style.boothName}>{selectedBooth.name}</p>
-            <p className={style.boothExplain}>{selectedBooth.type}</p>
+            <div className={style.BoothTitleContainer}>
+              <p className={style.boothName}>{selectedBooth.name}</p>
+              <p className={style.boothExplain}>{selectedBooth.type}</p>
+            </div>
+            <div className={style.member}>
+              {selectedBooth.developer?.length > 0 && (
+                <p>
+                  <span className="dept" style={{ fontWeight: "bold" }}>
+                    개발자
+                  </span>{" "}
+                  {selectedBooth.developer.join(", ")}
+                </p>
+              )}
+              <p>
+                <span className="dept" style={{ fontWeight: "bold" }}>
+                  디자이너
+                </span>{" "}
+                {selectedBooth.designer.join(", ")}
+              </p>
+            </div>
           </div>
           <div className={style.ButtonContainer}>
             <button

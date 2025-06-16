@@ -16,7 +16,7 @@ function Booths() {
   const [originalBooths, setOriginalBooths] = useState([]);
   const [boothsType, setBoothsType] = useState<
     "all" | "total" | "design" | "club" | "global"
-  >("total");
+  >("all");
   const navigate = useNavigate();
 
   const fetchBooths = async () => {
@@ -136,7 +136,7 @@ function Booths() {
           }
           onClick={() => setBoothType("design")}
         >
-          디자인과
+          디자인
         </button>
         <button
           className={

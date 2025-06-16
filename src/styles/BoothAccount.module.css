@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Nanum Gothic";
+  src: url("../fonts/NanumGothic.ttf") format("truetype");
+}
+
 .Body {
   display: flex;
   flex-direction: column;
@@ -16,13 +21,13 @@
   width: 71px;
   height: 71px;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .AccountInfoContainer > div {
   display: flex;
   flex-direction: column;
   align-items: center;
-  row-gap: 8px;
 }
 
 .AccountInfoContainer > div > p:first-child {
@@ -33,7 +38,17 @@
 .TitleContainer {
   display: flex;
   flex-direction: column;
-  row-gap: 8px;
+}
+
+.BoothTitleContainer {
+  display: flex;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.member {
+  margin: 10px 0;
+  line-height: 140%;
 }
 
 .boothName {
@@ -79,6 +94,8 @@
   outline: none;
   font-size: 16px;
   padding-bottom: 12px;
+  color: black;
+  font-family: "Nanum Gothic";
 }
 
 .PostsContainer > button:active {

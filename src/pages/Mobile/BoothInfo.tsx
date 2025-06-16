@@ -83,7 +83,7 @@ function BoothInfo() {
 
     const luminance = 0.299 * r + 0.587 * g + 0.114 * b;
 
-    return luminance < 128 ? "white" : "black";
+    return luminance < 120 ? "white" : "black";
   };
 
   if (!booth)
@@ -136,7 +136,7 @@ function BoothInfo() {
           onClick={() => navigate(`/booth-account/${boothId}`)}
           style={{
             color: `${getTextColor(booth.mainColor)}`,
-            backgroundColor: `${booth.mainColor}CC`,
+            backgroundColor: `${booth.mainColor}`,
           }}
         >
           부스 구경하기
