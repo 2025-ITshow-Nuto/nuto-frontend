@@ -4,22 +4,52 @@ import Footer from "../../components/Footer";
 import def from "../../styles/Default.module.css";
 import style from "../../styles/BoothAccount.module.css";
 import { useParams } from "react-router-dom";
-import { boothsData } from "../../assets/json/booths";
 import BoothCategory from "../../components/BoothCategory";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { usePostInfo } from "../../context/PostInfoContext";
 import { Helmet } from "react-helmet";
+import { createClient } from "contentful";
 
 function BoothAccount() {
   const boothId = useParams().boothId;
-  const selectedBooth = boothsData.filter(
-    (booth) => booth.booth_id === boothId
-  )[0];
+  const [booths, setBooths] = useState([]);
+  const selectedBooth = booths.filter((booth) => booth.booth_id === boothId)[0];
   const [type, setType] = useState<"nuto" | "polariod">("polariod");
   const navigate = useNavigate();
   const [totalPost, setTotalPost] = useState(0);
   const { setLocation } = usePostInfo();
+
+  const client = createClient({
+    space: process.env.REACT_APP_CONTENTFUL_SPACE,
+    accessToken: process.env.CONTENTFUL_ACCESSTOKEN,
+  });
+
+  const fetchBooths = async () => {
+    const entries = await client.getEntries({
+      content_type: process.env.REACT_APP_CONTENTFUL_CONTENT_TYPE,
+    });
+    return entries.items.map((item) => item.fields);
+  };
+
+  useEffect(() => {
+    fetchBooths()
+      .then((data) => {
+        const formattedBooths = data.map((booth: any) => {
+          return {
+            booth_id: booth.boothId,
+            members: booth.members,
+            s3_path: booth.s3Path,
+            img: booth.img?.fields?.file.url || "",
+            logo: booth.logo?.fields?.file.url || "",
+          };
+        });
+        setBooths(formattedBooths);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
   const handleClick = () => {
     setLocation(boothId);

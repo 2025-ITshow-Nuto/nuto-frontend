@@ -1,14 +1,53 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import style from "../../styles/BoothInfo.module.css";
 import Footer from "../../components/Footer";
-import { boothsData } from "../../assets/json/booths";
 import { Helmet } from "react-helmet";
+import { createClient } from "contentful";
 
 function BoothInfo() {
   const boothId = useParams().boothId;
-  const [booth] = boothsData.filter((booth) => booth.booth_id === boothId);
+  const [booths, setBooths] = useState([]);
+  const [booth] = booths.filter((booth) => booth.booth_id === boothId);
   const navigate = useNavigate();
+
+  const client = createClient({
+    space: process.env.REACT_APP_CONTENTFUL_SPACE,
+    accessToken: process.env.CONTENTFUL_ACCESSTOKEN,
+  });
+
+  const fetchBooths = async () => {
+    const entries = await client.getEntries({
+      content_type: process.env.REACT_APP_CONTENTFUL_CONTENT_TYPE,
+    });
+    return entries.items.map((item) => item.fields);
+  };
+
+  useEffect(() => {
+    fetchBooths()
+      .then((data) => {
+        console.log(data);
+        const formattedBooths = data.map((booth: any) => {
+          return {
+            booth_id: booth.boothId,
+            members: booth.members,
+            s3_path: booth.s3Path,
+            img: booth.img?.fields?.file.url || "",
+            logo: booth.logo?.fields?.file.url || "",
+            type: booth.type,
+            designer: booth.designer,
+            developer: booth.developer,
+            comment: booth.comment.content[0].content[0].value,
+            name: booth.name,
+            mainColor: booth.mainColor,
+          };
+        });
+        setBooths(formattedBooths);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
   useEffect(() => {
     const isWideScreen = window.innerWidth <= 500;
@@ -44,12 +83,14 @@ function BoothInfo() {
           <p className={style.type}>{booth.type.join(" | ")}</p>
         </div>
         <div className={style.member}>
-          <p>
-            <span className="dept" style={{ fontWeight: "bold" }}>
-              개발자
-            </span>{" "}
-            {booth.developer.join(", ")}
-          </p>
+          {booth.developer?.length > 0 && (
+            <p>
+              <span className="dept" style={{ fontWeight: "bold" }}>
+                개발자
+              </span>{" "}
+              {booth.developer.join(", ")}
+            </p>
+          )}
           <p>
             <span className="dept" style={{ fontWeight: "bold" }}>
               디자이너

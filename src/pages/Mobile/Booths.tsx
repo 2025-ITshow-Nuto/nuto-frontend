@@ -2,23 +2,47 @@ import React, { useState, useEffect } from "react";
 import style from "../../styles/Booths.module.css";
 import Board from "../../components/Board";
 import Footer from "../../components/Footer";
-import axios from "axios";
-import { boothsData } from "../../assets/json/booths";
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
-
-interface Booth {
-  booth_id: string;
-  members: string[];
-  s3_path: string;
-  img: string;
-  logo: string;
-}
+import { createClient } from "contentful";
 
 function Booths() {
-  const [booths, setBooths] = useState<Booth[]>(boothsData);
+  const [booths, setBooths] = useState([]);
   const [boothsType, setBoothsType] = useState<"total" | "design">("total");
   const navigate = useNavigate();
+
+  const client = createClient({
+    space: process.env.REACT_APP_CONTENTFUL_SPACE,
+    accessToken: process.env.CONTENTFUL_ACCESSTOKEN,
+  });
+
+  const fetchBooths = async () => {
+    const entries = await client.getEntries({
+      content_type: process.env.REACT_APP_CONTENTFUL_CONTENT_TYPE,
+    });
+    return entries.items.map((item) => item.fields);
+  };
+
+  useEffect(() => {
+    fetchBooths()
+      .then((data) => {
+        const formattedBooths = data.map((booth: any) => {
+          return {
+            booth_id: booth.boothId,
+            members: booth.members,
+            s3_path: booth.s3Path,
+            img: booth.img?.fields?.file.url || "",
+            logo: booth.logo?.fields?.file.url || "",
+            developer: booth.developer,
+            designer: booth.designer,
+          };
+        });
+        setBooths(formattedBooths);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
 
   useEffect(() => {
     const isWideScreen = window.innerWidth <= 500;
@@ -30,13 +54,13 @@ function Booths() {
 
   const setBoothType = (type: string) => {
     if (type === "design") {
-      const designBooths = boothsData.filter(
+      const designBooths = booths.filter(
         (booth) => booth.developer.length === 0
       );
       setBooths(designBooths);
       setBoothsType("design");
     } else {
-      setBooths(boothsData);
+      setBooths(booths);
       setBoothsType("total");
     }
   };

@@ -10,6 +10,7 @@
 
 .boothPageContainer {
   position: relative;
+  overflow: hidden;
 }
 
 .boothPageContainer > button {
@@ -23,7 +24,12 @@
   display: flex;
   position: absolute;
   top: 100px;
-  padding: 80px;
+  padding: 69px 80px 260px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  height: 100%;
+  overflow: scroll;
+  margin: 100px 0;
 }
 
 .nutoHeader {

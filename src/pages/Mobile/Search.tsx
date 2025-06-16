@@ -3,22 +3,15 @@ import Footer from "../../components/Footer";
 import Booth from "../../components/Booth";
 import style from "../../styles/Search.module.css";
 import { usePostInfo } from "../../context/PostInfoContext";
-import { boothsData } from "../../assets/json/booths";
 import { Helmet } from "react-helmet";
 import { useNavigate } from "react-router-dom";
-
-interface BoothType {
-  booth_id: string;
-  members: string[];
-  s3_path: string;
-  img: string;
-  logo: string;
-}
+import { createClient } from "contentful";
 
 function Search() {
-  const [booths, setBooths] = useState<BoothType[]>([]);
+  const [booths, setBooths] = useState([]);
   const [inputText, setInputText] = useState("");
   const { location, setLocation } = usePostInfo();
+  const [originalBooths, setOriginalBooths] = useState([]);
 
   const navigate = useNavigate();
 
@@ -30,27 +23,61 @@ function Search() {
     }
   }, [navigate]);
 
-  const fetchBooths = async (name: string) => {
+  const client = createClient({
+    space: process.env.REACT_APP_CONTENTFUL_SPACE,
+    accessToken: process.env.CONTENTFUL_ACCESSTOKEN,
+  });
+
+  const fetchBooths = async () => {
+    const entries = await client.getEntries({
+      content_type: process.env.REACT_APP_CONTENTFUL_CONTENT_TYPE,
+    });
+    return entries.items.map((item) => item.fields);
+  };
+
+  useEffect(() => {
+    fetchBooths()
+      .then((data) => {
+        const formattedBooths = data.map((booth: any) => {
+          return {
+            booth_id: booth.boothId,
+            members: booth.members,
+            s3_path: booth.s3Path,
+            img: booth.img?.fields?.file.url || "",
+            logo: booth.logo?.fields?.file.url || "",
+            developer: booth.developer,
+            designer: booth.designer,
+          };
+        });
+        setBooths(formattedBooths);
+        setOriginalBooths(formattedBooths);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
+  const setSearchedBooth = async (name: string) => {
     try {
-      const booth = name.trim() || "";
-      if (booth === "") {
-        setBooths(boothsData);
+      if (name.trim() === "") {
+        setBooths(originalBooths);
       } else {
-        const findBooths = boothsData.filter(
-          (boothInfo) =>
-            boothInfo.booth_id.includes(booth) ||
-            boothInfo.members.includes(booth)
-        );
-        console.log(findBooths);
+        const findBooths = booths.filter((boothInfo) => {
+          return (
+            boothInfo.booth_id.includes(name) ||
+            boothInfo.members.includes(name)
+          );
+        });
         setBooths(findBooths);
       }
     } catch (err) {
       console.error("데이터를 불러오는 중 오류가 발생했습니다.");
     }
+    console.log(name, booths);
   };
 
   useEffect(() => {
-    fetchBooths(inputText);
+    setSearchedBooth(inputText);
   }, [inputText]);
 
   return (
@@ -67,7 +94,7 @@ function Search() {
           onChange={(e) => setInputText(e.target.value)}
           onKeyDown={(e) => {
             if (e.key === "Enter") {
-              fetchBooths(inputText);
+              setSearchedBooth(inputText);
             }
           }}
         />
@@ -75,7 +102,7 @@ function Search() {
           src="/images/searchIcon.png"
           alt="Search Icon"
           className={style.searchIcon}
-          onClick={() => fetchBooths(inputText)}
+          onClick={() => setSearchedBooth(inputText)}
         />
         <img
           alt="Search Underbar"
