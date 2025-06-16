@@ -15,7 +15,7 @@ const client = createClient({
 function Search() {
   const [booths, setBooths] = useState([]);
   const [inputText, setInputText] = useState("");
-  const { location, setLocation } = usePostInfo();
+  const { setLocation, setLogo } = usePostInfo();
   const [originalBooths, setOriginalBooths] = useState([]);
 
   const navigate = useNavigate();
@@ -123,7 +123,10 @@ function Search() {
                 overflow: "hidden",
                 backgroundColor: `${booth.mainColor}`,
               }}
-              onClick={() => setLocation(booth.booth_id)}
+              onClick={() => {
+                setLocation(booth.booth_id);
+                setLogo(booth.logo);
+              }}
             >
               <Booth
                 key={booth.booth_id}
