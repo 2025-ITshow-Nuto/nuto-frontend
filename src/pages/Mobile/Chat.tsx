@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BusinessCard from "../../components/BusinessCard";
 import Members from "../../components/Members";
 import { profiles } from "../../assets/json/profiles";
@@ -9,6 +9,7 @@ import axios from "axios";
 import NutoPage from "../../components/NutoExplain";
 import { Helmet } from "react-helmet";
 import { usePostInfo } from "../../context/PostInfoContext";
+import { useNavigate } from "react-router-dom";
 
 type defaultChat = {
   type: "default-chat";
@@ -41,6 +42,16 @@ function Chat() {
     },
   ]);
   const [showcase, setShowcase] = useState("nuto");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isWideScreen = window.innerWidth <= 500;
+
+    if (!isWideScreen) {
+      navigate("/nuto-garden"); // 태블릿/데스크톱은 즉시 이동
+    }
+  }, [navigate]);
+
   const changeMember = (idx: number) => {
     console.log(idx, showcase);
     if (idx >= 0) {

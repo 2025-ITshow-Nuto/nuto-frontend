@@ -27,6 +27,14 @@ function BoothAccount() {
   };
 
   useEffect(() => {
+    const isWideScreen = window.innerWidth <= 500;
+
+    if (!isWideScreen) {
+      navigate("/nuto-garden"); // 태블릿/데스크톱은 즉시 이동
+    }
+  }, [navigate]);
+
+  useEffect(() => {
     const getTotalPost = async () => {
       try {
         const response = await axios.get(

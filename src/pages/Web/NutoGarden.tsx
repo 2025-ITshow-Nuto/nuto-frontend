@@ -22,12 +22,20 @@ function NutoGarden() {
   const [nutos, setNutos] = useState<FullPost[][]>([]);
   const [index, setIndex] = useState(0);
   const [searchParams] = useSearchParams();
-  const booth = searchParams.get('booth');
+  const booth = searchParams.get("booth");
 
   const navigate = useNavigate();
   const handleClick = (route: string) => {
     navigate(route);
   };
+
+  useEffect(() => {
+    const isWideScreen = window.innerWidth >= 1024;
+
+    if (!isWideScreen) {
+      navigate("/home"); // 모바일/태블릿은 즉시 이동
+    }
+  }, [navigate]);
 
   const chunkPost = (posts: FullPost[]) => {
     const result: FullPost[][] = [];
@@ -49,9 +57,9 @@ function NutoGarden() {
       } catch (error) {
         console.error(error);
       }
-    }
+    };
     console.log(booth);
-    fetchPosts()
+    fetchPosts();
   }, []);
 
   return (
@@ -66,8 +74,18 @@ function NutoGarden() {
           onClick={() => handleClick("/nuto-garden")}
         />
         <span>
-          <span className={style.goTomato} onClick={() => handleClick("/qr-page")}>응원 토마토 남기기</span>
-          <span className={style.goBooth} onClick={() => handleClick("/show-booth")}>부스별 텃밭 보러가기</span>
+          <span
+            className={style.goTomato}
+            onClick={() => handleClick("/qr-page")}
+          >
+            응원 토마토 남기기
+          </span>
+          <span
+            className={style.goBooth}
+            onClick={() => handleClick("/show-booth")}
+          >
+            부스별 텃밭 보러가기
+          </span>
         </span>
       </header>
       <div className={style.nutoContainer}>
@@ -78,11 +96,7 @@ function NutoGarden() {
         />
         {nutos.length > 0 ? (
           nutos[index].map((nuto, idx) => (
-            <Nuto
-              nuto={nuto}
-              idx={idx}
-              key={nuto._id}
-            />
+            <Nuto nuto={nuto} idx={idx} key={nuto._id} />
           ))
         ) : (
           <></>

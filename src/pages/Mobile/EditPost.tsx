@@ -7,6 +7,7 @@ import style from "../../styles/EditPost.module.css";
 import { usePolariod } from "../../context/PostContext";
 import * as fabric from "fabric";
 import { usePostInfo } from "../../context/PostInfoContext";
+import { useNavigate } from "react-router-dom";
 
 function EditPost() {
   const { image } = useImage();
@@ -34,6 +35,16 @@ function EditPost() {
     "/images/나무.png",
     "/images/아이디어.png",
   ];
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isWideScreen = window.innerWidth <= 500;
+
+    if (!isWideScreen) {
+      navigate("/nuto-garden"); // 태블릿/데스크톱은 즉시 이동
+    }
+  }, [navigate]);
 
   useEffect(() => {
     if (!canvasRef.current) return;

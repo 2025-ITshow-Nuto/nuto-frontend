@@ -33,6 +33,14 @@ function EditNuto() {
   ];
 
   useEffect(() => {
+    const isWideScreen = window.innerWidth <= 500;
+
+    if (!isWideScreen) {
+      navigate("/nuto-garden"); // 태블릿/데스크톱은 즉시 이동
+    }
+  }, [navigate]);
+
+  useEffect(() => {
     if (!canvasRef.current) return;
 
     if (!fabricCanvasRef.current) {

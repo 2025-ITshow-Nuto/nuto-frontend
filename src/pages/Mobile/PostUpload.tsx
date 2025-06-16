@@ -8,6 +8,8 @@ import { usePostInfo } from "../../context/PostInfoContext";
 import Booth from "../../components/Booth";
 import { boothsData } from "../../assets/json/booths";
 import { Helmet } from "react-helmet";
+import { useNavigate } from "react-router-dom";
+
 type BoothType = {
   name: string;
   type: ("웹사이트" | "게임" | "앱" | "웹" | "키오스크")[];
@@ -29,6 +31,16 @@ function PostUpload() {
 
   const { name, setName, location } = usePostInfo();
   const [selectedLocation, setSelectedLocation] = useState<BoothType>(null);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isWideScreen = window.innerWidth <= 500;
+
+    if (!isWideScreen) {
+      navigate("/nuto-garden"); // 태블릿/데스크톱은 즉시 이동
+    }
+  }, [navigate]);
 
   useEffect(() => {
     const selectedBooth = boothsData.filter(

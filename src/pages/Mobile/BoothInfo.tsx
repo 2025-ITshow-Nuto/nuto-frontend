@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import style from "../../styles/BoothInfo.module.css";
 import Footer from "../../components/Footer";
@@ -7,9 +7,16 @@ import { Helmet } from "react-helmet";
 
 function BoothInfo() {
   const boothId = useParams().boothId;
-  console.log(boothId);
   const [booth] = boothsData.filter((booth) => booth.booth_id === boothId);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const isWideScreen = window.innerWidth <= 500;
+
+    if (!isWideScreen) {
+      navigate("/nuto-garden"); // 태블릿/데스크톱은 즉시 이동
+    }
+  }, [navigate]);
 
   if (!booth)
     return <div>해당 부스의 정보가 아직 업데이트되지 않았습니다.</div>;

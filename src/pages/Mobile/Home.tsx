@@ -6,7 +6,8 @@ import axios from "axios";
 import { Helmet } from "react-helmet";
 import ModalPortal from "./ModalPortal";
 import Comment from "../../components/Comment";
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 interface Comment {
   _id: string;
@@ -27,6 +28,15 @@ type PostType = {
 function Home() {
   const [posts, setPosts] = useState<PostType[]>([]);
   const [selectPost, setSelectPost] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isWideScreen = window.innerWidth <= 500;
+
+    if (!isWideScreen) {
+      navigate("/nuto-garden"); // 태블릿/데스크톱은 즉시 이동
+    }
+  }, [navigate]);
 
   const fetchPost = async () => {
     try {
@@ -36,7 +46,7 @@ function Home() {
       console.error(err);
     }
   };
-  
+
   useEffect(() => {
     fetchPost();
   }, []);
@@ -48,19 +58,18 @@ function Home() {
           <ModalPortal>
             <motion.div
               className={style.backgroundModal}
-              initial={{ backgroundColor: 'rgba(255, 255, 255, 0)' }}
-              animate={{ backgroundColor: 'rgba(54, 54, 54, 0.7)' }}
-              exit={{ backgroundColor: 'rgba(255, 255, 255, 0)' }}
+              initial={{ backgroundColor: "rgba(255, 255, 255, 0)" }}
+              animate={{ backgroundColor: "rgba(54, 54, 54, 0.7)" }}
+              exit={{ backgroundColor: "rgba(255, 255, 255, 0)" }}
               transition={{ duration: 0.5 }}
               onClick={() => setSelectPost(null)}
-            >
-            </motion.div>
+            ></motion.div>
             <motion.div
               className={style.commentModal}
-              initial={{bottom: '-100%'}}
-              animate={{bottom: '0%'}}
-              exit={{bottom: '-100%'}}
-              transition={{duration: 0.5}}
+              initial={{ bottom: "-100%" }}
+              animate={{ bottom: "0%" }}
+              exit={{ bottom: "-100%" }}
+              transition={{ duration: 0.5 }}
               onClick={(e) => e.stopPropagation()}
             >
               <Comment postId={selectPost} setSelectPost={setSelectPost} />
