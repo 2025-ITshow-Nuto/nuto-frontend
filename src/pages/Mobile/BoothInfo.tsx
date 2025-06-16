@@ -57,7 +57,9 @@ function BoothInfo() {
             {booth.designer.join(", ")}
           </p>
         </div>
-        <p className={style.comment}>{booth.comment}</p>
+        <p className={style.comment} style={{ whiteSpace: "pre-line" }}>
+          {booth.comment.replaceAll("<br/>", "\n")}
+        </p>
         <button
           className={style.nuto}
           onClick={() => navigate(`/booth-account/${boothId}`)}

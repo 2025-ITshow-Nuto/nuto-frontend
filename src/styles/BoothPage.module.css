@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "Ownglyph";
+  src: url("../fonts/온글잎 박다현체.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Nanum Gothic";
+  src: url("../fonts/NanumGothic.ttf") format("truetype");
+}
+
 .boothPageContainer {
   position: relative;
 }
@@ -6,7 +16,7 @@
   position: fixed;
   top: 30px;
   right: 30px;
-  font-family: "Ownglyph PDH";
+  font-family: "Ownglyph";
 }
 
 .boothContainer {

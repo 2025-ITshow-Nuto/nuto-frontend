@@ -1,3 +1,8 @@
+@font-face {
+  font-family: "Nanum Gothic";
+  src: url("../fonts/NanumGothic.ttf") format("truetype");
+}
+
 .body {
   font-family: "NanumGothic";
   width: 100%;
@@ -63,7 +68,6 @@ p {
   color: #656565;
   background-color: transparent;
   margin-left: auto;
-
   width: 125px;
   height: 45px;
 }
