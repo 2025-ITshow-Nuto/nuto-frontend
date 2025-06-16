@@ -29,7 +29,6 @@ function Booths() {
   useEffect(() => {
     fetchBooths()
       .then((data) => {
-        console.log(data);
         const formattedBooths = data.map((booth: any) => {
           return {
             booth_id: booth.boothId,
