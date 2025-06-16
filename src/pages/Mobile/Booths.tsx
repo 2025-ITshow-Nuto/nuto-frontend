@@ -13,7 +13,10 @@ const client = createClient({
 
 function Booths() {
   const [booths, setBooths] = useState([]);
-  const [boothsType, setBoothsType] = useState<"total" | "design">("total");
+  const [originalBooths, setOriginalBooths] = useState([]);
+  const [boothsType, setBoothsType] = useState<
+    "all" | "total" | "design" | "club" | "global"
+  >("total");
   const navigate = useNavigate();
 
   const fetchBooths = async () => {
@@ -26,6 +29,7 @@ function Booths() {
   useEffect(() => {
     fetchBooths()
       .then((data) => {
+        console.log(data);
         const formattedBooths = data.map((booth: any) => {
           return {
             booth_id: booth.boothId,
@@ -39,9 +43,11 @@ function Booths() {
             comment: booth.comment.content[0].content[0].value,
             name: booth.name,
             mainColor: booth.mainColor,
+            boothType: booth.boothType,
           };
         });
         setBooths(formattedBooths);
+        setOriginalBooths(formattedBooths);
       })
       .catch((e) => {
         console.log(e);
@@ -58,14 +64,33 @@ function Booths() {
 
   const setBoothType = (type: string) => {
     if (type === "design") {
-      const designBooths = booths.filter(
-        (booth) => booth.developer.length === 0
+      const designBooths = originalBooths.filter(
+        (booth) => booth.boothType === "design"
       );
       setBooths(designBooths);
+      console.log(designBooths);
       setBoothsType("design");
-    } else {
-      setBooths(booths);
+    } else if (type === "club") {
+      const clubBooths = originalBooths.filter(
+        (booth) => booth.boothType === "club"
+      );
+      setBooths(clubBooths);
+      setBoothsType("club");
+    } else if (type === "global") {
+      const globalBooths = originalBooths.filter(
+        (booth) => booth.boothType === "global"
+      );
+      setBooths(globalBooths);
+      setBoothsType("global");
+    } else if (type === "total") {
+      const totalBooths = originalBooths.filter(
+        (booth) => booth.boothType === "total"
+      );
+      setBooths(totalBooths);
       setBoothsType("total");
+    } else if (type === "all") {
+      setBooths(originalBooths);
+      setBoothsType("all");
     }
   };
 
@@ -85,13 +110,23 @@ function Booths() {
       <div className={style.boothTypeSelectContainer}>
         <button
           className={
+            boothsType === "all"
+              ? style.selectedBoothType
+              : style.noneSelectedBoothType
+          }
+          onClick={() => setBoothType("all")}
+        >
+          전체
+        </button>
+        <button
+          className={
             boothsType === "total"
               ? style.selectedBoothType
               : style.noneSelectedBoothType
           }
           onClick={() => setBoothType("total")}
         >
-          전체
+          협업
         </button>
         <button
           className={
@@ -102,6 +137,26 @@ function Booths() {
           onClick={() => setBoothType("design")}
         >
           디자인과
+        </button>
+        <button
+          className={
+            boothsType === "club"
+              ? style.selectedBoothType
+              : style.noneSelectedBoothType
+          }
+          onClick={() => setBoothType("club")}
+        >
+          동아리
+        </button>
+        <button
+          className={
+            boothsType === "global"
+              ? style.selectedBoothType
+              : style.noneSelectedBoothType
+          }
+          onClick={() => setBoothType("global")}
+        >
+          글로벌
         </button>
       </div>
       <div className={style.boardContainer}>
