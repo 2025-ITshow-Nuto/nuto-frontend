@@ -1,71 +1,79 @@
 @font-face {
-    font-family: 'Ownglyph';
-    src: url('../fonts/온글잎 박다현체.ttf') format('truetype');
+  font-family: "Ownglyph";
+  src: url("../fonts/온글잎 박다현체.ttf") format("truetype");
 }
 
 .gardenContainer {
-    width: 100%;
-    height: 100vh;
-    background: linear-gradient(rgba(158, 201, 235, 100%) 0%, rgba(214, 226, 231, 81%) 74%, rgba(249, 242, 229, 70%) 100%);
-    overflow: hidden;
-    position: relative;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(
+    rgba(158, 201, 235, 100%) 0%,
+    rgba(214, 226, 231, 81%) 74%,
+    rgba(249, 242, 229, 70%) 100%
+  );
+  overflow: hidden;
+  position: relative;
 }
 
 .gardenHeader {
-    width: 100%;
-    height: 49px;
-    display: flex;
-    justify-content: space-between;
-    margin-top: 62px;
-    padding-left: 75px;
-    padding-right: 58px;
+  width: 100%;
+  height: 49px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 62px;
+  padding-left: 75px;
+  padding-right: 58px;
 }
 
 .goTomato {
-    font-family: 'Ownglyph';
-    font-size: 32px;
-    color: #224D20;
-    margin-right: 24px;
+  font-family: "Ownglyph";
+  font-size: 32px;
+  color: #224d20;
+  margin-right: 24px;
+  cursor: pointer;
 }
 
 .goBooth {
-    font-family: 'Ownglyph';
-    font-size: 32px;
-    color: #D52122;
+  font-family: "Ownglyph";
+  font-size: 32px;
+  color: #d52122;
+  cursor: pointer;
 }
 
 .nutoContainer {
-    width: 1939px;
-    height: 1091px;
-    align-self: center;
-    margin-top: 57px;
-    position: relative;
-    z-index: 1;
+  width: 1939px;
+  height: 1091px;
+  align-self: center;
+  margin-top: 57px;
+  position: relative;
+  z-index: 1;
 }
 
 .backImg {
-    width: 1939px;
-    height: 1091px;
+  width: 1939px;
+  height: 1091px;
 }
 
 .nextBtn {
-    width: 50px;
-    height: 50px;
-    position: fixed;
-    top: calc(calc(100vh / 2) - 30px);
-    right: 60px;
-    z-index: 10;
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  top: calc(calc(100vh / 2) - 30px);
+  right: 60px;
+  z-index: 10;
+  cursor: pointer;
 }
 
-.preBtn{
-    width: 50px;
-    height: 50px;
-    position: fixed;
-    top: calc(calc(100vh / 2) - 30px);
-    left: 60px;
-    z-index: 10;
+.preBtn {
+  width: 50px;
+  height: 50px;
+  position: fixed;
+  top: calc(calc(100vh / 2) - 30px);
+  left: 60px;
+  z-index: 10;
+  cursor: pointer;
 }
 
 .deactivateBtn {
-    display: none;
+  display: none;
 }

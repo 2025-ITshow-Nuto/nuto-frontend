@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import style from "../../styles/Intro.module.css";
-import introVideoSrc from '../../assets/video/intro.mp4';
+import introVideoSrc from "../../assets/video/intro.mp4";
 
 const IntroPage = () => {
   const [isDesktop, setIsDesktop] = useState<boolean | null>(null);
@@ -14,7 +14,7 @@ const IntroPage = () => {
     setIsDesktop(isWideScreen);
 
     if (!isWideScreen) {
-      navigate('/home'); // 모바일/태블릿은 즉시 이동
+      navigate("/home"); // 모바일/태블릿은 즉시 이동
     }
   }, [navigate]);
 
@@ -23,14 +23,20 @@ const IntroPage = () => {
     if (!isDesktop || !videoRef.current) return;
 
     const handleEnded = () => {
-      navigate('/show-booth');
+      navigate("/show-booth");
+    };
+
+    const handleClick = () => {
+      navigate("/nuto-garden");
     };
 
     const video = videoRef.current;
-    video.addEventListener('ended', handleEnded);
+    video.addEventListener("ended", handleEnded);
+    window.addEventListener("click", handleClick);
 
     return () => {
-      video.removeEventListener('ended', handleEnded);
+      video.removeEventListener("ended", handleEnded);
+      window.removeEventListener("click", handleClick);
     };
   }, [isDesktop, navigate]);
 

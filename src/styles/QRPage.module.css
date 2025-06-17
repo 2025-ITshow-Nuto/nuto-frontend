@@ -27,6 +27,7 @@
   font-family: "Ownglyph";
   font-size: 32px;
   color: #d52122;
+  cursor: pointer;
 }
 
 .qrContainer > canvas {

@@ -53,7 +53,7 @@ function BoothPage() {
           alt="로고"
           width={203}
           height={44}
-          style={{ marginTop: "5px" }}
+          style={{ marginTop: "5px", cursor: "pointer" }}
           onClick={() => handleClick("/intro")}
           loading="lazy"
         />
@@ -62,7 +62,7 @@ function BoothPage() {
             onClick={() => handleClick("/nuto-garden")}
             className={style.goBooth}
           >
-            응원 토마토 남기기
+            응원 토마토 보러가기
           </span>
         </span>
       </header>
