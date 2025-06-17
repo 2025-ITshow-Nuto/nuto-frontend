@@ -14,6 +14,7 @@ function BoothInfo() {
   const boothId = useParams().boothId;
   const [booths, setBooths] = useState([]);
   const booth = booths.find((booth) => booth.booth_id === boothId);
+  console.log(booth);
   const navigate = useNavigate();
   const currentScrollY = useRef(window.scrollY);
   const [visible, setVisible] = useState(true);

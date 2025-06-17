@@ -22,6 +22,10 @@ function NutoPost() {
     }
   });
 
+  const handleClick = (route: string) => {
+    navigate(route);
+  };
+
   useEffect(() => {
     const isWideScreen = window.innerWidth >= 1024;
 
@@ -43,6 +47,7 @@ function NutoPost() {
         width={203}
         height={44}
         className={style.logo}
+        onClick={() => handleClick("/nuto-garden")}
       />
       <img
         src="/images/postClose.png"

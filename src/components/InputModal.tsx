@@ -25,8 +25,13 @@ export default function InputModal({
 
   return (
     <ModalPortal>
-      <div className={styles.inputContainer}>
-        <div className={styles.inputBox}>
+      <div
+        className={styles.inputContainer}
+        onClick={() => {
+          setShowInput(false);
+        }}
+      >
+        <div className={styles.inputBox} onClick={(e) => e.stopPropagation()}>
           <p className={styles.question}>{q}</p>
           <input
             className={styles.input}

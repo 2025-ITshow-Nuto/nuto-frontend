@@ -61,11 +61,11 @@ function BoothCategory(props: { type: string; boothId: string }) {
 
       {openModal && (
         <ModalPortal>
-          <div
-            className={style.modalBackground}
-            onClick={() => setOpenModal(false)}
-          >
-            <div className={style.modalContainer}>
+          <div className={style.modalBackground}>
+            <div
+              className={style.modalContainer}
+              onClick={(e) => e.stopPropagation()}
+            >
               <p>
                 From.{" "}
                 {datas.filter((data) => data._id === selectedPost._id)[0].name}
