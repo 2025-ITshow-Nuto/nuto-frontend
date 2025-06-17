@@ -125,7 +125,7 @@ function Search() {
               }}
               onClick={() => {
                 setLocation(booth.booth_id);
-                setLogo(booth.logo);
+                setLogo(booth.img);
               }}
             >
               <Booth

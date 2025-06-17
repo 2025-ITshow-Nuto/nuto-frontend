@@ -25,6 +25,7 @@ type PostType = {
   location: string;
   password: string;
   comments: Comment[];
+  logoImage: string;
 };
 
 interface PostProps {
@@ -42,6 +43,8 @@ function Post({ post, refetchPost, setSelectPost }: PostProps) {
     const salt = process.env.REACT_APP_SALT_VALUE;
     return await bcrypt.hash(password, salt);
   };
+
+  console.log(post);
 
   const handleClick = async () => {
     const hashedPassword = await hashing(password);
@@ -71,14 +74,15 @@ function Post({ post, refetchPost, setSelectPost }: PostProps) {
     <div className={style.post} key={post._id}>
       <div className={style.profile}>
         <div className={style.profileContainer}>
-          <div
+          <img
+            src={post.logoImage}
+            alt={post._id}
             className={style.profileImgContainer}
             style={{
-              backgroundImage: `url(/images/booths/${post.location}.png)`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
-          ></div>
+          />
           <p className={style.profileName}>{post.location}</p>
         </div>
         <div
