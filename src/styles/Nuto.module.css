@@ -1,30 +1,31 @@
 @font-face {
-    font-family: 'Ownglyph';
-    src: url('../fonts/온글잎 박다현체.ttf') format('truetype');
+  font-family: "Ownglyph";
+  src: url("../fonts/온글잎 박다현체.ttf") format("truetype");
 }
 
 .nuto {
-    width: 220px;
-    height: 124px;
-    position: absolute;
-    display: flex;
-    justify-content: center;
+  width: 220px;
+  height: 124px;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
 }
 
 .image {
-    width: 220px;
-    height: 124px;
+  width: 220px;
+  height: 124px;
 }
 
 .name {
-    width: 140px;
-    height: auto;
-    margin-top: 55px;
-    margin-left: -8px;
-    position: absolute;
-    z-index: 2;
-    text-align: center;
-    font-family: 'Ownglyph';
-    font-size: 26px;
-    color: #FFF2D9;
+  width: 140px;
+  height: auto;
+  margin-top: 55px;
+  margin-left: -8px;
+  position: absolute;
+  z-index: 2;
+  text-align: center;
+  font-family: "Ownglyph";
+  font-size: 26px;
+  color: #fff2d9;
 }
