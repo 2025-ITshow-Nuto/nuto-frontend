@@ -79,6 +79,9 @@ function BoothPage() {
               onClick={() =>
                 handleClick(`/nuto-garden?booth=${booth.booth_id}`)
               }
+              style={{
+                cursor: "pointer",
+              }}
             >
               <Board
                 booth={booth}
