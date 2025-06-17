@@ -6,7 +6,7 @@ function NutoPage() {
   const [booth] = useState({
     name: "누토",
     type: ["웹사이트", "앱"],
-    img: "/images/booths/nutoIntroduce.svg",
+    img: "//images.ctfassets.net/hdfi0waar2aj/QCOLzYPxDZXVzmXsd0gZM/6278391ff8a8d9b57dafef497c4643d6/nutoIntroduce.svg",
     developer: ["오지은", "이소리", "장하영"],
     designer: ["조혜원", "박새봄"],
     comment:
@@ -14,7 +14,7 @@ function NutoPage() {
     members: ["오지은", "이소리", "장하영", "조혜원", "박새봄"],
     booth_id: "nuto",
     s3_path: "nuto",
-    logo: "/images/boothName.svg",
+    logo: "//images.ctfassets.net/hdfi0waar2aj/5dVqLqnjpCGrz7TzHho34Q/f598ffdca736281a6b6647a574ff6a23/logo.svg",
     mainColor: "#C5362E",
   });
 

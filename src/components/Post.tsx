@@ -25,6 +25,7 @@ type PostType = {
   location: string;
   password: string;
   comments: Comment[];
+  logoImage: string;
 };
 
 interface PostProps {
@@ -35,13 +36,15 @@ interface PostProps {
 
 function Post({ post, refetchPost, setSelectPost }: PostProps) {
   // console.log(process.env.REACT_APP_SALT_VALUE);
-  const [showInput, setShowInput] = useState(false)
-  const [postId, setPostId] = useState('')
-  const [password, setPassword] = useState('')
+  const [showInput, setShowInput] = useState(false);
+  const [postId, setPostId] = useState("");
+  const [password, setPassword] = useState("");
   const hashing = async (password: string) => {
     const salt = process.env.REACT_APP_SALT_VALUE;
     return await bcrypt.hash(password, salt);
   };
+
+  console.log(post);
 
   const handleClick = async () => {
     const hashedPassword = await hashing(password);
@@ -63,25 +66,32 @@ function Post({ post, refetchPost, setSelectPost }: PostProps) {
   };
 
   useEffect(() => {
-    if(password.trim() === '') return
-    handleClick()
-  }, [password])
+    if (password.trim() === "") return;
+    handleClick();
+  }, [password]);
 
   return (
     <div className={style.post} key={post._id}>
       <div className={style.profile}>
         <div className={style.profileContainer}>
-          <div
+          <img
+            src={post.logoImage}
+            alt={post._id}
             className={style.profileImgContainer}
             style={{
-              backgroundImage: `url(/images/booths/${post.location}.png)`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
-          ></div>
+          />
           <p className={style.profileName}>{post.location}</p>
         </div>
-        <div onClick={() => {setPostId(post._id); setShowInput(true)}} className={style.deleteIcon}>
+        <div
+          onClick={() => {
+            setPostId(post._id);
+            setShowInput(true);
+          }}
+          className={style.deleteIcon}
+        >
           <MdDelete />
         </div>
       </div>
@@ -115,7 +125,11 @@ function Post({ post, refetchPost, setSelectPost }: PostProps) {
         </div>
       </div>
       {showInput && (
-        <InputModal q="포스트 비밀번호를 입력해주세요" setState={setPassword} setShowInput={setShowInput} />
+        <InputModal
+          q="포스트 비밀번호를 입력해주세요"
+          setState={setPassword}
+          setShowInput={setShowInput}
+        />
       )}
     </div>
   );

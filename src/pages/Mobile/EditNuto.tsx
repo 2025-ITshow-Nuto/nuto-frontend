@@ -17,10 +17,8 @@ function EditNuto() {
   const textObjectRef = useRef<fabric.IText | null>(null);
   const fabricCanvasRef = useRef<fabric.Canvas | null>(null);
   const [imgSrc, setImgSrc] = useState<string>("/images/redTomato.png");
-  const { location, setLocation } = usePostInfo();
-  const { name, setName } = usePostInfo();
-  const { setNutoFile } = usePolariod();
-  const { polariodFile, setPolariodFile } = usePolariod();
+  const { location, setLocation, name, setName, logo, setLogo } = usePostInfo();
+  const { polariodFile, setPolariodFile, setNutoFile } = usePolariod();
   const { setImage } = useImage();
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
@@ -173,8 +171,6 @@ function EditNuto() {
 
     const label = await chkText(text);
 
-    console.log(label);
-
     const negativeEmotions = [
       "anger",
       "annoyance",
@@ -213,6 +209,7 @@ function EditNuto() {
       formData.append("name", name);
       formData.append("location", location);
       formData.append("password", hashedPassword);
+      formData.append("logoImage", logo);
 
       try {
         await axios.post("https://nuto.mirim-it-show.site/post", formData, {
@@ -223,19 +220,14 @@ function EditNuto() {
         setNutoFile(null);
         setPolariodFile(null);
         setImage("");
+        setLogo("");
 
         sessionStorage.setItem("name", "");
         sessionStorage.setItem("image", "");
         sessionStorage.setItem("nutoFile", "");
         sessionStorage.setItem("polariodFile", "");
         sessionStorage.setItem("location", "");
-
-        console.log(
-          location,
-          name,
-          sessionStorage.getItem("location"),
-          sessionStorage.getItem("name")
-        );
+        sessionStorage.setItem("location", "");
 
         navigate("/");
       } catch (err) {

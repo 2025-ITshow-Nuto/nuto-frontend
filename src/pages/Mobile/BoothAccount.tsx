@@ -23,7 +23,7 @@ function BoothAccount() {
   const [type, setType] = useState<"nuto" | "polariod">("polariod");
   const navigate = useNavigate();
   const [totalPost, setTotalPost] = useState(0);
-  const { setLocation } = usePostInfo();
+  const { setLocation, setLogo } = usePostInfo();
 
   const fetchBooths = async () => {
     const entries = await client.getEntries({
@@ -58,6 +58,7 @@ function BoothAccount() {
 
   const handleClick = () => {
     setLocation(boothId);
+    setLogo(selectedBooth.img);
     navigate("/post");
   };
 

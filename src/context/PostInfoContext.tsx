@@ -5,6 +5,8 @@ interface PostInfoContextProps {
   location: string;
   setName: (name: string) => void;
   setLocation: (location: string) => void;
+  logo: string;
+  setLogo: (logo: string) => void;
 }
 
 const PostInfoContext = createContext<PostInfoContextProps | undefined>(
@@ -20,6 +22,7 @@ export const PostInfoProvider = ({
   const [location, setLocation] = useState(
     () => sessionStorage.getItem("location") || ""
   );
+  const [logo, setLogo] = useState(() => sessionStorage.getItem("logo") || "");
 
   useEffect(() => {
     if (name !== "") {
@@ -28,10 +31,16 @@ export const PostInfoProvider = ({
     if (location !== "") {
       sessionStorage.setItem("location", location);
     }
-  }, [name, location]);
+
+    if (logo !== "") {
+      sessionStorage.setItem("logo", logo);
+    }
+  }, [name, location, logo]);
 
   return (
-    <PostInfoContext.Provider value={{ name, location, setName, setLocation }}>
+    <PostInfoContext.Provider
+      value={{ name, location, setName, setLocation, logo, setLogo }}
+    >
       {children}
     </PostInfoContext.Provider>
   );

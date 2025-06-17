@@ -23,6 +23,7 @@ type PostType = {
   location: string;
   password: string;
   comments: Comment[];
+  logoImage: string;
 };
 
 function Home() {
