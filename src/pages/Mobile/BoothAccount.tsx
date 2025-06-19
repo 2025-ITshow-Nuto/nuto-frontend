@@ -57,7 +57,7 @@ function BoothAccount() {
   }, []);
 
   const handleClick = () => {
-    setLocation(boothId);
+    setLocation(selectedBooth.name);
     setLogo(selectedBooth.img);
     navigate("/post");
   };
