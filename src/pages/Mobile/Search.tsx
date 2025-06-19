@@ -124,7 +124,7 @@ function Search() {
                 backgroundColor: `${booth.mainColor}`,
               }}
               onClick={() => {
-                setLocation(booth.booth_id);
+                setLocation(booth.name);
                 setLogo(booth.img);
               }}
             >

@@ -33,6 +33,7 @@
   border-radius: 6px;
   padding: 16px;
   position: relative;
+  font-size: 17px;
 }
 
 .input:focus {

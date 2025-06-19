@@ -22,6 +22,7 @@ type BoothType = {
   booth_id: string;
   s3_path: string;
   logo: string;
+  location: string;
 };
 
 const client = createClient({
@@ -46,13 +47,6 @@ function PostUpload() {
     }
   }, [navigate]);
 
-  useEffect(() => {
-    const selectedBooth = booths.filter(
-      (booth) => booth.booth_id === location
-    )[0];
-    setSelectedLocation(selectedBooth);
-  });
-
   const fetchBooths = async () => {
     const entries = await client.getEntries({
       content_type: process.env.REACT_APP_CONTENTFUL_CONTENT_TYPE,
@@ -61,25 +55,41 @@ function PostUpload() {
   };
 
   useEffect(() => {
-    fetchBooths()
-      .then((data) => {
-        const formattedBooths = data.map((booth: any) => {
-          return {
-            booth_id: booth.boothId,
-            members: booth.members,
-            s3_path: booth.s3Path,
-            img: booth.img?.fields?.file.url || "",
-            logo: booth.logo?.fields?.file.url || "",
-            developer: booth.developer,
-            designer: booth.designer,
-          };
+    const fetchAndSetBooths = async () => {
+      try {
+        const entries = await client.getEntries({
+          content_type: process.env.REACT_APP_CONTENTFUL_CONTENT_TYPE,
         });
+
+        const formattedBooths = entries.items.map((item: any) => ({
+          name: item.fields.name,
+          type: item.fields.type,
+          booth_id: item.fields.boothId,
+          members: item.fields.members,
+          s3_path: item.fields.s3Path,
+          img: item.fields.img?.fields?.file.url || "",
+          logo: item.fields.logo?.fields?.file.url || "",
+          developer: item.fields.developer,
+          designer: item.fields.designer,
+          comment: item.fields.comment,
+          location: item.fields.name,
+        }));
+
         setBooths(formattedBooths);
-      })
-      .catch((e) => {
+
+        const selectedBooth = formattedBooths.find(
+          (booth) => booth.location === location
+        );
+
+        console.log(selectedBooth);
+        setSelectedLocation(selectedBooth);
+      } catch (e) {
         console.log(e);
-      });
-  }, []);
+      }
+    };
+
+    fetchAndSetBooths();
+  }, [location]);
 
   const uploadImage = () => {
     if (imgRef.current) {
