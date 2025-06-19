@@ -48,7 +48,7 @@ function PostUpload() {
 
   useEffect(() => {
     const selectedBooth = booths.filter(
-      (booth) => booth.booth_id === location
+      (booth) => booth.location === location
     )[0];
     setSelectedLocation(selectedBooth);
   });
