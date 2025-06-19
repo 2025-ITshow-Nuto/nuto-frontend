@@ -83,7 +83,7 @@ function Post({ post, refetchPost, setSelectPost }: PostProps) {
               backgroundPosition: "center",
             }}
           />
-          <p className={style.profileName}>{post.name}</p>
+          <p className={style.profileName}>{post.location}</p>
         </div>
         <div
           onClick={() => {
